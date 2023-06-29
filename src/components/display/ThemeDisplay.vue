@@ -43,6 +43,7 @@
 <style lang="scss" scoped>
 	.theme-list {
 		display: flex;
+		justify-content: space-around;
 		gap: var(--space-small);
 		margin: 0 1rem;
 
@@ -52,7 +53,7 @@
 			gap: var(--space-xx-small);
 			justify-content: center;
 			align-items: center;
-			width: calc(calc(100% / 5) - 0.8rem);
+			/*width: calc(calc(100% / 5) - 0.8rem);*/
 			height: 80px;
 
 			& .theme-image-wrapper {

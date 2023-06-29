@@ -5,13 +5,17 @@
 	<section class="home-display-section">
 		<ThemeDisplay />
 	</section>
+	<section class="home-display-section">
+		<ProductList />
+	</section>
 </template>
 
 <script>
 	import MainBanner from '@/components/display/MainBanner.vue';
 	import ThemeDisplay from '@/components/display/ThemeDisplay.vue';
+	import ProductList from '@/components/display/ProductList.vue';
 	export default {
-		components: { MainBanner, ThemeDisplay },
+		components: { MainBanner, ThemeDisplay, ProductList },
 		setup() {
 			return {};
 		},

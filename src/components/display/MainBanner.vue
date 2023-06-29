@@ -3,17 +3,23 @@
 		<Swiper :slides-per-view="1" :pagination="true" :autoplay="{ delay: 5000 }" :modules="modules">
 			<SwiperSlide>
 				<div class="image-wrapper">
-					<img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" />
+					<img
+						src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/mba15-midnight-select-202306?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1684518479433"
+					/>
 				</div>
 			</SwiperSlide>
 			<SwiperSlide>
 				<div class="image-wrapper">
-					<img src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" />
+					<img
+						src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/ipad-comp-pro-202210?wid=338&hei=386&fmt=jpeg&qlt=90&.v=1664411153112"
+					/>
 				</div>
 			</SwiperSlide>
 			<SwiperSlide>
 				<div class="image-wrapper">
-					<img src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg" />
+					<img
+						src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-compare-iphone-14-pro-202209?wid=366&hei=508&fmt=jpeg&qlt=90&.v=1661471046256"
+					/>
 				</div>
 			</SwiperSlide>
 		</Swiper>
