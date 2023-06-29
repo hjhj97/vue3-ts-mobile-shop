@@ -1,15 +1,17 @@
 <template>
 	<section class="home-display-section">
-		<div>
-			<MainBanner />
-		</div>
+		<MainBanner />
+	</section>
+	<section class="home-display-section">
+		<ThemeDisplay />
 	</section>
 </template>
 
 <script>
 	import MainBanner from '@/components/display/MainBanner.vue';
+	import ThemeDisplay from '@/components/display/ThemeDisplay.vue';
 	export default {
-		components: { MainBanner },
+		components: { MainBanner, ThemeDisplay },
 		setup() {
 			return {};
 		},
@@ -18,6 +20,6 @@
 
 <style lang="scss" scoped>
 	.home-display-section {
-		margin-top: 1rem;
+		margin: 1rem 0;
 	}
 </style>
