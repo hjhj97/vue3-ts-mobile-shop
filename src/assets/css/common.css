@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css');
+
 :root {
 	--header-height: 3rem;
 
@@ -5,7 +7,7 @@
 	--font-size-mid: 1.7rem;
 	--font-size-small: 1.3rem;
 	--font-size-x-small: 1.1rem;
-	--font-size-xx-small: 0.8rem;
+	--font-size-xx-small: 0.9rem;
 	--font-size-xxx-small: 0.7rem;
 
 	--space-xx-small: 0.4rem;
@@ -15,4 +17,8 @@
 	--space-large: 2rem;
 	--space-x-large: 2.4rem;
 	--space-xx-large: 3.2rem;
+}
+
+body {
+	font-family: 'Pretendard-Regular';
 }
