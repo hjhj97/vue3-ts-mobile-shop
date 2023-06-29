@@ -6,6 +6,11 @@ const routes: Array<RouteRecordRaw> = [
 		name: 'Home',
 		component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue'),
 	},
+	{
+		path: '/product/:product_id',
+		name: 'ProductDetail',
+		component: () => import(/* webpackChunkName: "about" */ '../views/product/ProductDetail.vue'),
+	},
 ];
 
 const router = createRouter({

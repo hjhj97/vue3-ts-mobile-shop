@@ -1,7 +1,12 @@
 <template>
 	<div>
 		<ul class="product-list">
-			<li v-for="product in products" :key="product.id" class="product-item">
+			<router-link
+				:to="{ name: 'ProductDetail', params: { product_id: product.id } }"
+				v-for="product in products"
+				:key="product.id"
+				class="product-item"
+			>
 				<div class="product-image-wrapper">
 					<img :src="product.image" />
 				</div>
@@ -10,7 +15,7 @@
 					<span class="product-title">{{ product.title }}</span>
 					<span class="product-price">{{ $priceFormat(product.price) }} 원</span>
 				</div>
-			</li>
+			</router-link>
 		</ul>
 	</div>
 </template>
@@ -99,17 +104,17 @@
 			}
 
 			& .product-brand {
-				font-size: var(--font-size-xx-small);
+				font-size: var(--font-size-xxx-small);
 				font-weight: bold;
 			}
 			& .product-title {
 				font-size: var(--font-size-xx-small);
-				font-weight: 500;
+				font-weight: 400;
 			}
 
 			& .product-price {
 				font-size: var(--font-size-x-small);
-				font-weight: bold;
+				font-weight: 600;
 			}
 		}
 	}

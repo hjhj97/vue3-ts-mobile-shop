@@ -17,8 +17,10 @@
 	--space-large: 2rem;
 	--space-x-large: 2.4rem;
 	--space-xx-large: 3.2rem;
+
+	--color-primary: #6282e3;
 }
 
 body {
-	font-family: 'Pretendard-Regular';
+	font-family: 'Pretendard';
 }
