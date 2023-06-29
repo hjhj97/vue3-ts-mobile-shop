@@ -48,6 +48,8 @@
 			display: flex;
 		}
 		& .header-item-mid {
+			position: relative;
+			left: 15px;
 			& h1 {
 				font-size: var(--font-size-small);
 				font-weight: bold;
