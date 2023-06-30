@@ -1,0 +1,6 @@
+.slide-up-enter-from {
+	transform: translateY(100%);
+}
+.slide-up-enter-active {
+	transition: transform 0.4s ease-in-out;
+}

@@ -22,6 +22,7 @@
 <style scoped>
 	footer {
 		padding: var(--space-small) var(--space-x-small);
+		padding-bottom: 4rem;
 		font-size: var(--font-size-xx-small);
 		color: #999;
 		background-color: #f2f2f2;

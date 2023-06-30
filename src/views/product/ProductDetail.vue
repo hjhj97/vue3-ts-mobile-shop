@@ -34,16 +34,22 @@
 		</div>
 
 		<BottomFixed>
-			<!--<Button theme="reverse">장바구니</Button>-->
-			<Button theme="primary">구매하기</Button>
+			<Button theme="primary" @click="onClickBuy">구매하기</Button>
 		</BottomFixed>
+
+		<TeleportModal v-if="isOpen">
+			<ProductDetailBS @close-modal="onCloseModal" />
+		</TeleportModal>
 	</div>
 </template>
 
 <script lang="ts">
 	import Button from '@/components/control/Button.vue';
 	import BottomFixed from '@/components/control/BottomFixed.vue';
-	import { defineComponent } from 'vue';
+	import TeleportModal from '@/components/modal/TeleportModal.vue';
+	import ProductDetailBS from '@/components/modal/bottomsheet/ProductDetailBS.vue';
+	import { defineComponent, ref } from 'vue';
+	import useModal from '@/compositions/useModal';
 
 	const product = {
 		id: 1,
@@ -56,10 +62,23 @@
 	};
 
 	export default defineComponent({
-		components: { BottomFixed, Button },
+		components: { BottomFixed, Button, TeleportModal, ProductDetailBS },
 		setup() {
+			const { openModal, closeModal, isOpen } = useModal();
+
+			const onClickBuy = () => {
+				openModal();
+			};
+
+			const onCloseModal = () => {
+				closeModal();
+			};
+
 			return {
 				product,
+				isOpen,
+				onClickBuy,
+				onCloseModal,
 			};
 		},
 	});

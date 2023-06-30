@@ -22,4 +22,5 @@
 <style>
 	@import url('@/assets/css/reset.css');
 	@import url('@/assets/css/common.css');
+	@import url('@/assets/css/transition.css');
 </style>
