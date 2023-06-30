@@ -17,6 +17,8 @@
 <style lang="scss" scoped>
 	.bottom-fixed {
 		position: fixed;
+		max-width: 500px;
+		margin: 0 auto;
 		background-color: #fff;
 		bottom: 0;
 		left: 0;
