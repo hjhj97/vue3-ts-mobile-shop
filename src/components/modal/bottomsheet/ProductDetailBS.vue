@@ -21,14 +21,18 @@
 	import Button from '@/components/control/Button.vue';
 	import router from '@/router';
 	import { defineComponent } from 'vue';
+	import { requestOrder } from '@/api/order';
 
 	export default defineComponent({
 		components: { Button },
 		emits: ['close-modal'],
 		setup() {
-			const onRequestOrder = () => {
-				// 비동기통신
-				router.push({ name: 'Order', params: { order_id: 1 } });
+			const onRequestOrder = async () => {
+				const res = await requestOrder().catch();
+				if (res?.data) {
+					const { orderId } = res.data;
+					router.push({ name: 'Order', params: { orderId } });
+				}
 			};
 			return {
 				onRequestOrder,

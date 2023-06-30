@@ -6,7 +6,7 @@
 		<ThemeDisplay />
 	</section>
 	<section class="home-display-section">
-		<ProductList />
+		<ProductList v-bind="{ products }" />
 	</section>
 </template>
 
@@ -15,19 +15,26 @@
 	import ThemeDisplay from '@/components/display/ThemeDisplay.vue';
 	import ProductList from '@/components/display/ProductList.vue';
 	import { getProducts } from '@/api/product';
-	import { onMounted } from 'vue';
+	import { onMounted, ref } from 'vue';
 
 	export default {
 		components: { MainBanner, ThemeDisplay, ProductList },
 		setup() {
-			const fetchData = async () => {
-				const res = await getProducts().catch();
-				console.log(res);
-			};
-
+			const products = ref([]);
 			onMounted(() => {
 				fetchData();
 			});
+
+			const fetchData = async () => {
+				const res = await getProducts().catch();
+				if (res?.data) {
+					products.value = res.data?.products;
+				}
+			};
+
+			return {
+				products,
+			};
 		},
 	};
 </script>

@@ -48,23 +48,22 @@
 	import BottomFixed from '@/components/control/BottomFixed.vue';
 	import TeleportModal from '@/components/modal/TeleportModal.vue';
 	import ProductDetailBS from '@/components/modal/bottomsheet/ProductDetailBS.vue';
-	import { defineComponent, ref } from 'vue';
+	import { defineComponent, onMounted, ref } from 'vue';
 	import useModal from '@/compositions/useModal';
-
-	const product = {
-		id: 1,
-		title: 'MacBook Air 15',
-		brand: 'Apple',
-		price: 1890000,
-		category: 'Mac',
-		image:
-			'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/mba15-midnight-select-202306?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1684518479433',
-	};
+	import { getProductById } from '@/api/product';
+	import { useRoute } from 'vue-router';
 
 	export default defineComponent({
 		components: { BottomFixed, Button, TeleportModal, ProductDetailBS },
 		setup() {
+			const route = useRoute();
+			const product = ref({});
+			const product_id = route.params.product_id as string;
 			const { openModal, closeModal, isOpen } = useModal();
+
+			onMounted(() => {
+				fetchData();
+			});
 
 			const onClickBuy = () => {
 				openModal();
@@ -72,6 +71,13 @@
 
 			const onCloseModal = () => {
 				closeModal();
+			};
+
+			const fetchData = async () => {
+				const res = await getProductById(product_id).catch();
+				if (res?.data) {
+					product.value = res.data?.product;
+				}
 			};
 
 			return {
