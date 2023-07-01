@@ -43,7 +43,7 @@
 			gap: 1rem;
 			align-items: center;
 			padding: 0.5rem;
-			height: 140px;
+			height: 120px;
 			border: 1px solid #ddd;
 			border-radius: 1rem;
 			box-sizing: border-box;

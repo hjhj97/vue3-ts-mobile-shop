@@ -22,7 +22,7 @@
 		border: none;
 		width: 100%;
 		padding: 1rem;
-		border-radius: var(--space-mid);
+		border-radius: var(--space-x-small);
 		font-size: var(--font-size-xx-small);
 		font-weight: 600;
 

@@ -2,6 +2,7 @@
 	<div>
 		<form @submit="handleSubmit" class="order-form">
 			<OrderProduct v-bind="{ product }" />
+			<OrderDelivery />
 			<section class="order-delivery"></section>
 			<section class="order-payment"></section>
 			<BottomFixed>
@@ -13,6 +14,7 @@
 
 <script lang="ts">
 	import { defineComponent, onMounted, ref } from 'vue';
+	import OrderDelivery from '@/components/order/OrderDelivery.vue';
 	import BottomFixed from '@/components/control/BottomFixed.vue';
 	import Button from '@/components/control/Button.vue';
 	import OrderProduct from '@/components/order/OrderProduct.vue';
@@ -20,7 +22,7 @@
 	import { useRoute } from 'vue-router';
 
 	export default defineComponent({
-		components: { BottomFixed, Button, OrderProduct },
+		components: { BottomFixed, Button, OrderProduct, OrderDelivery },
 		setup() {
 			const route = useRoute();
 			const orderId = route.params.orderId as string;
