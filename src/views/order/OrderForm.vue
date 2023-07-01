@@ -3,8 +3,9 @@
 		<form @submit="handleSubmit" class="order-form">
 			<OrderProduct v-bind="{ product }" />
 			<OrderDelivery />
-			<section class="order-delivery"></section>
+			<OrderPayment />
 			<section class="order-payment"></section>
+
 			<BottomFixed>
 				<Button theme="primary" @click="onClickPay">결제하기</Button>
 			</BottomFixed>
@@ -20,9 +21,10 @@
 	import OrderProduct from '@/components/order/OrderProduct.vue';
 	import { getOrderInfo } from '@/api/order';
 	import { useRoute } from 'vue-router';
+	import OrderPayment from '@/components/order/OrderPayment.vue';
 
 	export default defineComponent({
-		components: { BottomFixed, Button, OrderProduct, OrderDelivery },
+		components: { BottomFixed, Button, OrderProduct, OrderDelivery, OrderPayment },
 		setup() {
 			const route = useRoute();
 			const orderId = route.params.orderId as string;
