@@ -22,7 +22,7 @@
 
 <style lang="scss" scoped>
 	.order-payment {
-		margin-top: 2rem;
+		margin: 1rem;
 		& h2 {
 			font-size: var(--font-size-x-small);
 			font-weight: bold;

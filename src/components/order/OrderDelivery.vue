@@ -15,12 +15,12 @@
 		</div>
 		<div class="order-input-wrapper zipcd">
 			<label for="order-zipcd">우편번호</label>
-			<input type="text" id="order-zipcd" />
+			<input type="text" id="order-zipcd" disabled />
 			<Button theme="primary">검색</Button>
 		</div>
 		<div class="order-input-wrapper address">
 			<label for="order-address">주소</label>
-			<input type="text" id="order-address" placeholder="우편번호 선택시 자동입력" readonly />
+			<input type="text" id="order-address" placeholder="우편번호 선택시 자동입력" disabled />
 		</div>
 		<div class="order-input-wrapper address_detail">
 			<label for="order-address_detail">상세주소</label>
@@ -46,12 +46,12 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		width: 100%;
-		margin-top: 2rem;
+		margin: 1rem;
 
 		& h2 {
 			font-size: var(--font-size-x-small);
 			font-weight: bold;
+			margin-top: 1rem;
 		}
 
 		& .order-input-wrapper {

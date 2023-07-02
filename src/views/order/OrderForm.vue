@@ -1,10 +1,16 @@
 <template>
-	<div>
+	<div class="no-footer bottom-fixed">
 		<form @submit="handleSubmit" class="order-form">
-			<OrderProduct v-bind="{ product }" />
-			<OrderDelivery />
-			<OrderPayment />
-			<section class="order-payment"></section>
+			<div class="order-section">
+				<OrderProduct v-bind="{ product }" />
+			</div>
+			<div class="order-section">
+				<OrderDelivery />
+			</div>
+
+			<div class="order-section">
+				<OrderPayment />
+			</div>
 
 			<BottomFixed>
 				<Button theme="primary" @click="onClickPay">결제하기</Button>
@@ -14,14 +20,17 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, onMounted, ref } from 'vue';
+	// 컴포넌트
 	import OrderDelivery from '@/components/order/OrderDelivery.vue';
 	import BottomFixed from '@/components/control/BottomFixed.vue';
 	import Button from '@/components/control/Button.vue';
 	import OrderProduct from '@/components/order/OrderProduct.vue';
-	import { getOrderInfo } from '@/api/order';
-	import { useRoute } from 'vue-router';
 	import OrderPayment from '@/components/order/OrderPayment.vue';
+	// vue 라이브러리
+	import { defineComponent, onMounted, ref } from 'vue';
+	import { useRoute } from 'vue-router';
+	// API
+	import { getOrderInfo } from '@/api/order';
 
 	export default defineComponent({
 		components: { BottomFixed, Button, OrderProduct, OrderDelivery, OrderPayment },
@@ -57,8 +66,10 @@
 	});
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 	.order-form {
-		margin: 1rem 0.7rem;
+		& .order-section {
+			border-top: 10px solid #eee;
+		}
 	}
 </style>

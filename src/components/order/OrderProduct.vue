@@ -31,7 +31,7 @@
 
 <style lang="scss" scoped>
 	.order-product {
-		/*margin: 0 0.7rem;*/
+		margin: 1rem;
 		& h2 {
 			font-size: var(--font-size-x-small);
 			font-weight: bold;
