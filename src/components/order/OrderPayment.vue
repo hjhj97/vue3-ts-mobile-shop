@@ -16,19 +16,8 @@
 </template>
 
 <script lang="ts">
-	enum PayMethod {
-		KAKAO = 'KAKAO',
-		NAVER = 'NAVER',
-		TOSS = 'TOSS',
-		ACCOUNT = 'ACCOUNT',
-	}
-	const PAY_METHOD_NAME: { [method: string]: string } = {
-		[PayMethod.KAKAO]: '카카오페이',
-		[PayMethod.NAVER]: '네이버페이',
-		[PayMethod.TOSS]: '토스페이',
-		[PayMethod.ACCOUNT]: '무통장입금',
-	};
 	import { defineComponent, ref } from 'vue';
+	import { PayMethod, PAY_METHOD_NAME } from '@/types/order';
 
 	export default defineComponent({
 		setup() {
