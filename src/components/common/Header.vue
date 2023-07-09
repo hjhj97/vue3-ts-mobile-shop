@@ -6,7 +6,9 @@
 			</div>
 		</div>
 		<div class="header-item-mid">
-			<h1>Shop</h1>
+			<router-link :to="{ name: 'Home' }">
+				<h1>Shop</h1>
+			</router-link>
 		</div>
 		<div class="header-item-right">
 			<div>
