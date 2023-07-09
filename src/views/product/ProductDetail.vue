@@ -8,13 +8,7 @@
 				<span class="product-brand">{{ product.brand }}</span>
 				<span class="product-title">{{ product.title }}</span>
 
-				<div class="rating-wrapper">
-					<div class="star-wrapper">
-						<img src="@/assets/image/icon/star.svg" />
-						<span>{{ product.rating?.score }}</span>
-					</div>
-					<span>({{ product.rating?.count }})</span>
-				</div>
+				<ProductRating v-bind="{ product }" />
 
 				<span class="product-price">{{ $priceFormat(product.price) }} 원</span>
 			</div>
@@ -58,6 +52,7 @@
 	import BottomFixed from '@/components/control/BottomFixed.vue';
 	import TeleportModal from '@/components/modal/TeleportModal.vue';
 	import ProductDetailBS from '@/components/modal/bottomsheet/ProductDetailBS.vue';
+	import ProductRating from '@/components/product/ProductRating.vue';
 	// vue 라이브러리
 	import { defineComponent, onMounted, ref } from 'vue';
 	import { useRoute } from 'vue-router';
@@ -69,7 +64,7 @@
 	import { Product } from '@/types/product';
 
 	export default defineComponent({
-		components: { BottomFixed, Button, TeleportModal, ProductDetailBS },
+		components: { BottomFixed, Button, TeleportModal, ProductDetailBS, ProductRating },
 		setup() {
 			const route = useRoute();
 			const product = ref<Product>({} as Product);
@@ -127,20 +122,6 @@
 				}
 				& .product-title {
 					font-size: var(--font-size-x-small);
-				}
-
-				& .rating-wrapper {
-					display: flex;
-					align-items: center;
-					gap: var(--space-xx-small);
-
-					& .star-wrapper {
-						display: flex;
-						& img {
-							width: 16px;
-							height: 16px;
-						}
-					}
 				}
 
 				& .product-price {

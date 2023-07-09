@@ -13,6 +13,8 @@
 				<div class="product-info">
 					<span class="product-brand">{{ product.brand }}</span>
 					<span class="product-title">{{ product.title }}</span>
+
+					<ProductRating v-bind="{ product }" />
 					<span class="product-price">{{ $priceFormat(product.price) }} 원</span>
 				</div>
 			</router-link>
@@ -21,11 +23,14 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from 'vue';
+	import { Product } from '@/types/product';
+	import { defineComponent, PropType } from 'vue';
+	import ProductRating from '../product/ProductRating.vue';
 
 	export default defineComponent({
+		components: { ProductRating },
 		props: {
-			products: Array,
+			products: Array as PropType<Product[]>,
 		},
 		setup() {
 			return {};
@@ -44,8 +49,9 @@
 			display: flex;
 			flex-direction: column;
 			gap: 1rem;
-			width: calc(calc(100% / 2) - 1rem);
-			padding: 0.2rem;
+			width: calc(calc(100% / 2) - 1.5rem);
+			padding: var(--space-xx-small);
+			margin-bottom: var(--space-mid);
 
 			& .product-image-wrapper {
 				width: 100%;
