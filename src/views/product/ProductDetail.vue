@@ -7,6 +7,14 @@
 			<div class="product-info">
 				<span class="product-brand">{{ product.brand }}</span>
 				<span class="product-title">{{ product.title }}</span>
+
+				<div class="rating-wrapper">
+					<div class="star-wrapper">
+						<img src="@/assets/image/icon/star.svg" v-for="i in 5" :key="i" />
+					</div>
+					<span>({{ product.rating?.count }})</span>
+				</div>
+
 				<span class="product-price">{{ $priceFormat(product.price) }} 원</span>
 			</div>
 		</div>
@@ -44,20 +52,26 @@
 </template>
 
 <script lang="ts">
+	// 컴포넌트
 	import Button from '@/components/control/Button.vue';
 	import BottomFixed from '@/components/control/BottomFixed.vue';
 	import TeleportModal from '@/components/modal/TeleportModal.vue';
 	import ProductDetailBS from '@/components/modal/bottomsheet/ProductDetailBS.vue';
+	// vue 라이브러리
 	import { defineComponent, onMounted, ref } from 'vue';
-	import useModal from '@/compositions/useModal';
-	import { getProductById } from '@/api/product';
 	import { useRoute } from 'vue-router';
+	// composition
+	import useModal from '@/compositions/useModal';
+	// API
+	import { getProductById } from '@/api/product';
+	// Type
+	import { Product } from '@/types/product';
 
 	export default defineComponent({
 		components: { BottomFixed, Button, TeleportModal, ProductDetailBS },
 		setup() {
 			const route = useRoute();
-			const product = ref({});
+			const product = ref<Product>({} as Product);
 			const product_id = route.params.product_id as string;
 			const { openModal, closeModal, isOpen } = useModal();
 
@@ -104,7 +118,7 @@
 				display: flex;
 				flex-direction: column;
 				gap: var(--space-xx-small);
-				margin: 0 var(--space-x-small);
+				margin: var(--space-mid) var(--space-x-small);
 
 				& .product-brand {
 					font-size: var(--font-size-xx-small);
@@ -112,6 +126,24 @@
 				}
 				& .product-title {
 					font-size: var(--font-size-x-small);
+				}
+
+				& .rating-wrapper {
+					display: flex;
+					align-items: center;
+
+					& .star-wrapper {
+						display: flex;
+						& img {
+							width: 16px;
+							height: 16px;
+						}
+					}
+				}
+
+				& .product-price {
+					font-size: var(--font-size-small);
+					font-weight: bold;
 				}
 			}
 		}
