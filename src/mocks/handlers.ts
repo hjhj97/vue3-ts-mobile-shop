@@ -52,4 +52,17 @@ export const handlers = [
 			}),
 		);
 	}),
+
+	// 주문페이지 - 결제 요청
+	rest.post('/pay/:orderId', (req, res, ctx) => {
+		const { orderId } = req.params;
+		return res(
+			ctx.json({
+				success: true,
+				data: {
+					orderId,
+				},
+			}),
+		);
+	}),
 ];

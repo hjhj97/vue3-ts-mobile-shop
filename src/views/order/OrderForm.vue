@@ -1,6 +1,6 @@
 <template>
 	<div class="no-footer bottom-fixed">
-		<form @submit="handleSubmit" class="order-form">
+		<form @submit="onSubmit" class="order-form">
 			<div class="order-section">
 				<OrderProduct v-bind="{ product }" />
 			</div>
@@ -13,7 +13,7 @@
 			</div>
 
 			<BottomFixed>
-				<Button theme="primary" @click="onClickPay">결제하기</Button>
+				<Button type="submit" theme="primary">결제하기</Button>
 			</BottomFixed>
 		</form>
 	</div>
@@ -30,11 +30,16 @@
 	import { defineComponent, onMounted, ref } from 'vue';
 	import { useRoute } from 'vue-router';
 	// API
-	import { getOrderInfo } from '@/api/order';
+	import { getOrderInfo, requestPay } from '@/api/order';
+	// npm 라이브러리
+	import { useForm } from 'vee-validate';
+	// Type
+	import { OrderForm } from '@/types/order';
 
 	export default defineComponent({
 		components: { BottomFixed, Button, OrderProduct, OrderDelivery, OrderPayment },
 		setup() {
+			const { handleSubmit, validate } = useForm<OrderForm>();
 			const route = useRoute();
 			const orderId = route.params.orderId as string;
 
@@ -44,11 +49,22 @@
 				fetchData();
 			});
 
-			const handleSubmit = (e: Event) => {
+			const onSubmit = async (e: Event) => {
 				e.preventDefault();
+
+				const { valid, errors } = await validate();
+
+				if (valid) {
+					onRequestPay();
+				} else {
+					// errors
+				}
 			};
 
-			const onClickPay = () => {};
+			const onRequestPay = handleSubmit(async (orderData: OrderForm) => {
+				const res = await requestPay(orderId);
+				console.log(res);
+			});
 
 			const fetchData = async () => {
 				const res = await getOrderInfo(orderId).catch();
@@ -59,8 +75,7 @@
 
 			return {
 				product,
-				handleSubmit,
-				onClickPay,
+				onSubmit,
 			};
 		},
 	});
