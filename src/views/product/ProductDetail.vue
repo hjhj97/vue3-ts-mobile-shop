@@ -10,7 +10,8 @@
 
 				<div class="rating-wrapper">
 					<div class="star-wrapper">
-						<img src="@/assets/image/icon/star.svg" v-for="i in 5" :key="i" />
+						<img src="@/assets/image/icon/star.svg" />
+						<span>{{ product.rating?.score }}</span>
 					</div>
 					<span>({{ product.rating?.count }})</span>
 				</div>
@@ -131,6 +132,7 @@
 				& .rating-wrapper {
 					display: flex;
 					align-items: center;
+					gap: var(--space-xx-small);
 
 					& .star-wrapper {
 						display: flex;
