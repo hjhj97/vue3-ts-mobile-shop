@@ -3,40 +3,73 @@
 		<h2>주문자 정보</h2>
 		<div class="order-input-wrapper name">
 			<label for="order-name">이름</label>
-			<input type="text" id="order-name" />
+			<input type="text" id="order-name" v-model="deliveryInfo.name" />
 		</div>
 		<div class="order-input-wrapper contact">
 			<label for="order-contact">연락처</label>
-			<input type="tel" id="order-contact" />
+			<input type="tel" id="order-contact" v-model="deliveryInfo.contact" />
 		</div>
 		<div class="order-input-wrapper email">
 			<label for="order-email">이메일</label>
-			<input type="email" id="order-email" />
+			<input type="email" id="order-email" v-model="deliveryInfo.email" />
 		</div>
 		<div class="order-input-wrapper zipcd">
 			<label for="order-zipcd">우편번호</label>
-			<input type="text" id="order-zipcd" disabled />
+			<input type="text" id="order-zipcd" disabled v-model="deliveryInfo.zipcd" />
 			<Button theme="primary">검색</Button>
 		</div>
 		<div class="order-input-wrapper address">
 			<label for="order-address">주소</label>
-			<input type="text" id="order-address" placeholder="우편번호 선택시 자동입력" disabled />
+			<input
+				type="text"
+				id="order-address"
+				placeholder="우편번호 선택시 자동입력"
+				disabled
+				v-model="deliveryInfo.address"
+			/>
 		</div>
 		<div class="order-input-wrapper address_detail">
 			<label for="order-address_detail">상세주소</label>
-			<input type="text" id="order-address_detail" />
+			<input type="text" id="order-address_detail" v-model="deliveryInfo.addressDetail" />
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-	import { defineComponent } from 'vue';
+	// 컴포넌트
 	import Button from '../control/Button.vue';
+	// vue 라이브러리
+	import { defineComponent } from 'vue';
+	// npm 라이브러리
+	import { useField } from 'vee-validate';
+	// Type
+	import { OrderDelivery } from '@/types/order';
 
 	export default defineComponent({
 		components: { Button },
 		setup() {
-			return {};
+			const { value: deliveryInfo } = useField<OrderDelivery>(
+				'deliveryInfo',
+				(values) => {
+					if (!values.name) {
+						return '주문자 이름을 입력해주세요';
+					} else {
+						return true;
+					}
+				},
+				{
+					initialValue: {
+						name: '',
+						contact: '',
+						email: '',
+						zipcd: '',
+						address: '',
+					},
+				},
+			);
+			return {
+				deliveryInfo,
+			};
 		},
 	});
 </script>
