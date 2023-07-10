@@ -51,7 +51,7 @@
 			gap: 1rem;
 			width: calc(calc(100% / 2) - 1.5rem);
 			padding: var(--space-xx-small);
-			margin-bottom: var(--space-mid);
+			/*margin-bottom: var(--space-mid);*/
 
 			& .product-image-wrapper {
 				width: 100%;
