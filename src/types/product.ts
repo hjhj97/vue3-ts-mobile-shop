@@ -9,4 +9,11 @@ export interface Product {
 		count: number;
 	};
 	image: string;
+	options: ProductOption[];
+}
+
+export interface ProductOption {
+	optionId: number;
+	optionTitle: string;
+	optionPrice: number;
 }

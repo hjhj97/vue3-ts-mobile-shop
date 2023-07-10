@@ -41,7 +41,7 @@
 		</BottomFixed>
 
 		<TeleportModal v-if="isOpen">
-			<ProductDetailBS @close-modal="onCloseModal" />
+			<ProductDetailBS :options="product.options" @close-modal="onCloseModal" />
 		</TeleportModal>
 	</div>
 </template>

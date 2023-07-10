@@ -13,6 +13,18 @@ export const products: Product[] = [
 		},
 		image:
 			'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/mba15-midnight-select-202306?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1684518479433',
+		options: [
+			{
+				optionId: 1,
+				optionTitle: '기본형',
+				optionPrice: 1990000,
+			},
+			{
+				optionId: 5,
+				optionTitle: '고급형',
+				optionPrice: 2190000,
+			},
+		],
 	},
 	{
 		id: 2,
@@ -26,6 +38,13 @@ export const products: Product[] = [
 		},
 		image:
 			'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/ipad-comp-pro-202210?wid=338&hei=386&fmt=jpeg&qlt=90&.v=1664411153112',
+		options: [
+			{
+				optionId: 2,
+				optionTitle: 'option',
+				optionPrice: 1990000,
+			},
+		],
 	},
 
 	{
@@ -40,6 +59,13 @@ export const products: Product[] = [
 		},
 		image:
 			'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-compare-iphone-14-pro-202209?wid=366&hei=508&fmt=jpeg&qlt=90&.v=1661471046256',
+		options: [
+			{
+				optionId: 3,
+				optionTitle: 'option',
+				optionPrice: 1990000,
+			},
+		],
 	},
 	{
 		id: 4,
@@ -53,5 +79,12 @@ export const products: Product[] = [
 		},
 		image:
 			'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-compare-iphone-14-202209?wid=364&hei=508&fmt=jpeg&qlt=90&.v=1660759995969',
+		options: [
+			{
+				optionId: 4,
+				optionTitle: 'option',
+				optionPrice: 1990000,
+			},
+		],
 	},
 ];
