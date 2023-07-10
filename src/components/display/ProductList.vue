@@ -2,7 +2,7 @@
 	<div>
 		<ul class="product-list">
 			<router-link
-				:to="{ name: 'ProductDetail', params: { product_id: product.id } }"
+				:to="{ name: 'ProductDetail', params: { productId: product.id } }"
 				v-for="product in products"
 				:key="product.id"
 				class="product-item"

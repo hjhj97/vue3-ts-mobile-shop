@@ -68,7 +68,7 @@
 		setup() {
 			const route = useRoute();
 			const product = ref<Product>({} as Product);
-			const product_id = route.params.product_id as string;
+			const productId = route.params.productId as string;
 			const { openModal, closeModal, isOpen } = useModal();
 
 			onMounted(() => {
@@ -84,7 +84,7 @@
 			};
 
 			const fetchData = async () => {
-				const res = await getProductById(product_id).catch();
+				const res = await getProductById(productId).catch();
 				if (res?.data) {
 					product.value = res.data?.product;
 				}

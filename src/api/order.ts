@@ -1,7 +1,7 @@
 import axios from '@/plugins/axiosSetup';
 
-export const requestOrder = async () => {
-	const res = await axios.post(`/order`);
+export const requestOrder = async (payload: any) => {
+	const res = await axios.post(`/order`, payload);
 	return res.data;
 };
 

@@ -36,6 +36,7 @@
 	import { requestOrder } from '@/api/order';
 	// Type
 	import { ProductOption } from '@/types/product';
+	import { useRoute } from 'vue-router';
 
 	type OrderOption = ProductOption & { amount: number };
 
@@ -49,6 +50,9 @@
 		},
 		emits: ['close-modal'],
 		setup(props) {
+			const route = useRoute();
+			const productId = route.params.productId as string;
+
 			const selectedOption = ref<OrderOption[]>(
 				props.options.map((option) => ({
 					...option,
@@ -61,10 +65,11 @@
 			);
 
 			const onRequestOrder = async () => {
-				const res = await requestOrder().catch();
+				console.log(productId);
+				const res = await requestOrder({ productId, option: selectedOption.value }).catch();
 				if (res?.data) {
-					const { orderId } = res.data;
-					router.push({ name: 'Order', params: { orderId } });
+					const { order } = res.data;
+					router.push({ name: 'Order', params: { orderId: order.orderId } });
 				}
 			};
 
