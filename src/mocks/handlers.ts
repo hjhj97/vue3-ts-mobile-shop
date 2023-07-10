@@ -56,6 +56,7 @@ export const handlers = [
 				success: true,
 				data: {
 					product: found,
+					order: orderData,
 				},
 			}),
 		);

@@ -11,6 +11,7 @@
 
 <script lang="ts">
 	import { ProductOption } from '@/types/product';
+	import { getOptionPrice } from '@/utils/price';
 	import { computed, defineComponent, ref, PropType } from 'vue';
 
 	const MIN_AMOUNT = 0;
@@ -26,9 +27,7 @@
 		emits: ['change-amount'],
 		setup(props, { emit }) {
 			const amount = ref<number>(0);
-			const totalPrice = computed(() => {
-				return props.option.optionPrice * amount.value;
-			});
+			const totalPrice = computed(() => getOptionPrice(props.option, amount.value));
 
 			const handleAmount = (diff: number | Event) => {
 				let newAmount: number;

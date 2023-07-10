@@ -17,8 +17,9 @@
 			</div>
 
 			<div class="bs-bottom">
-				<Button theme="primary" @click="onRequestOrder"
-					>총 {{ $priceFormat(totalPrice) }}원 구입</Button
+				<Button theme="primary" @click="onRequestOrder">
+					<span v-if="totalPrice > 0"> 총 {{ $priceFormat(totalPrice) }}원 </span>
+					구매</Button
 				>
 			</div>
 		</div>
@@ -31,14 +32,15 @@
 	import ProductAmount from '@/components/product/ProductAmount.vue';
 	// vue 라이브러리
 	import { computed, defineComponent, PropType, ref } from 'vue';
+	import { useRoute } from 'vue-router';
 	import router from '@/router';
 	// API
 	import { requestOrder } from '@/api/order';
 	// Type
 	import { ProductOption } from '@/types/product';
-	import { useRoute } from 'vue-router';
+	import { getTotalPrice } from '@/utils/price';
 
-	type OrderOption = ProductOption & { amount: number };
+	export type OrderOption = ProductOption & { amount: number };
 
 	export default defineComponent({
 		components: { Button, ProductAmount },
@@ -60,13 +62,14 @@
 				})),
 			);
 
-			const totalPrice = computed(() =>
-				selectedOption.value.reduce((acc, cur) => acc + cur.optionPrice * cur.amount, 0),
-			);
+			const totalPrice = computed(() => getTotalPrice(selectedOption));
 
 			const onRequestOrder = async () => {
 				console.log(productId);
-				const res = await requestOrder({ productId, option: selectedOption.value }).catch();
+				const res = await requestOrder({
+					productId,
+					option: selectedOption.value.filter((option) => option.amount > 0),
+				}).catch();
 				if (res?.data) {
 					const { order } = res.data;
 					router.push({ name: 'Order', params: { orderId: order.orderId } });

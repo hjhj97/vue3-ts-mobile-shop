@@ -1,6 +1,5 @@
 <template>
 	<section class="order-product">
-		<h2>주문상품</h2>
 		<div class="product-box">
 			<div class="product-box-left">
 				<div class="product-image-wrapper"><img :src="product?.image" /></div>
@@ -9,7 +8,11 @@
 				<div class="product-info">
 					<span class="product-brand">{{ product?.brand }}</span>
 					<span class="product-title">{{ product?.title }}</span>
-					<span class="product-price">{{ $priceFormat(product?.price) }} 원</span>
+					<span class="product-option-title">{{ option?.optionTitle }}</span>
+					<div>
+						<span class="product-option-price">{{ $priceFormat(optionPrice) }} 원</span>
+						<span> | {{ option?.amount }}개</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -17,26 +20,32 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, onMounted } from 'vue';
+	import { Product } from '@/types/product';
+	import { getOptionPrice } from '@/utils/price';
+	import { computed, defineComponent, PropType } from 'vue';
+	import { OrderOption } from '../modal/bottomsheet/ProductDetailBS.vue';
 
 	export default defineComponent({
 		props: {
-			product: Object,
+			product: {
+				type: Object as PropType<Product>,
+				required: true,
+			},
+			option: {
+				type: Object as PropType<OrderOption>,
+				required: true,
+			},
 		},
-		setup() {
-			return {};
+		setup(props) {
+			const optionPrice = computed(() => getOptionPrice(props.option, props.option.amount));
+			return { optionPrice };
 		},
 	});
 </script>
 
 <style lang="scss" scoped>
 	.order-product {
-		margin: 1rem;
-		& h2 {
-			font-size: var(--font-size-x-small);
-			font-weight: bold;
-			margin: 1rem 0;
-		}
+		margin: var(--space-x-small);
 
 		& .product-box {
 			display: flex;
@@ -78,12 +87,17 @@
 						font-weight: bold;
 					}
 					& .product-title {
-						font-size: var(--font-size-x-small);
+						font-size: var(--font-size-xx--small);
+						font-weight: 400;
+					}
+					& .product-option-title {
+						font-size: var(--font-size-xxx--small);
+						color: #bbb;
 						font-weight: 400;
 					}
 
-					& .product-price {
-						font-size: var(--font-size-small);
+					& .product-option-price {
+						font-size: var(--font-size-x-small);
 						font-weight: 600;
 					}
 				}

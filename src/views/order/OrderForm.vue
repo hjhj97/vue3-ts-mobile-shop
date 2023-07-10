@@ -2,7 +2,15 @@
 	<div class="no-footer bottom-fixed">
 		<form @submit="onSubmit" class="order-form">
 			<div class="order-section">
-				<OrderProduct v-bind="{ product }" />
+				<h2>
+					주문상품
+					{{ selectedOption.length }} 건
+				</h2>
+				<OrderProduct
+					v-bind="{ product, option }"
+					v-for="option in selectedOption"
+					:key="option.optionId"
+				/>
 			</div>
 			<div class="order-section">
 				<OrderDelivery />
@@ -13,7 +21,7 @@
 			</div>
 
 			<BottomFixed>
-				<Button type="submit" theme="primary">결제하기</Button>
+				<Button type="submit" theme="primary">{{ $priceFormat(totalPrice) }}원 결제하기</Button>
 			</BottomFixed>
 		</form>
 	</div>
@@ -27,14 +35,17 @@
 	import OrderProduct from '@/components/order/OrderProduct.vue';
 	import OrderPayment from '@/components/order/OrderPayment.vue';
 	// vue 라이브러리
-	import { defineComponent, onMounted, ref } from 'vue';
+	import { computed, defineComponent, onMounted, ref } from 'vue';
 	import { useRoute } from 'vue-router';
+	import { getTotalPrice } from '@/utils/price';
 	// API
 	import { getOrderInfo, requestPay } from '@/api/order';
 	// npm 라이브러리
 	import { useForm } from 'vee-validate';
 	// Type
 	import { OrderForm } from '@/types/order';
+	import { Product } from '@/types/product';
+	import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';
 
 	export default defineComponent({
 		components: { BottomFixed, Button, OrderProduct, OrderDelivery, OrderPayment },
@@ -43,7 +54,12 @@
 			const route = useRoute();
 			const orderId = route.params.orderId as string;
 
-			const product = ref({});
+			const product = ref<Product>({} as Product);
+			const selectedOption = ref<OrderOption[]>([]);
+
+			const totalPrice = computed(() => {
+				return getTotalPrice(selectedOption);
+			});
 
 			onMounted(() => {
 				fetchData();
@@ -68,12 +84,15 @@
 
 			const fetchData = async () => {
 				const res = await getOrderInfo(orderId).catch();
-				if (res?.data?.product) {
+				if (res?.data) {
 					product.value = res.data.product;
+					selectedOption.value = res.data.order.option;
 				}
 			};
 
 			return {
+				totalPrice,
+				selectedOption,
 				product,
 				onSubmit,
 			};
@@ -85,6 +104,12 @@
 	.order-form {
 		& .order-section {
 			border-top: 10px solid #eee;
+
+			& h2 {
+				font-size: var(--font-size-x-small);
+				font-weight: bold;
+				margin: 1rem;
+			}
 		}
 	}
 </style>
