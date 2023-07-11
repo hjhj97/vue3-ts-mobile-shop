@@ -7,7 +7,7 @@
 				:key="method"
 				class="payment-item"
 				:class="{ on: selectedPayMethod === method }"
-				@click="selectedPayMethod = method"
+				@click="onSelectPayment(method)"
 			>
 				{{ PAY_METHOD_NAME[method] }}
 			</div>
@@ -20,12 +20,21 @@
 	import { PayMethod, PAY_METHOD_NAME } from '@/types/order';
 
 	export default defineComponent({
-		setup() {
+		emits: ['select-payment'],
+		setup(_, { emit }) {
 			const selectedPayMethod = ref<PayMethod>(PayMethod.KAKAO);
+
+			const onSelectPayment = (method: PayMethod) => {
+				selectedPayMethod.value = method;
+				emit('select-payment', { payMethod: selectedPayMethod.value });
+			};
+
 			return {
 				PAY_METHOD_NAME,
 				PayMethod,
 				selectedPayMethod,
+				//
+				onSelectPayment,
 			};
 		},
 	});

@@ -52,6 +52,7 @@
 	import { useField } from 'vee-validate';
 	// Type
 	import { OrderDelivery } from '@/types/order';
+	import { email } from '@vee-validate/rules';
 
 	export default defineComponent({
 		components: { Button, AddressBS, TeleportModal },
@@ -64,6 +65,8 @@
 						return '주문자 이름을 입력해주세요';
 					} else if (!values.contact) {
 						return '연락처를 입력해주세요';
+					} else if (!email(values.email)) {
+						return '이메일을 확인해주세요';
 					} else if (!values.zipcd || !values.address) {
 						return '주소를 입력해주세요';
 					} else {

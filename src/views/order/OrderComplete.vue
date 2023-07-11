@@ -9,7 +9,39 @@
 			/>
 		</div>
 
-		<div></div>
+		<div class="order-info">
+			<h2>주문 정보</h2>
+			<div class="info-row">
+				<span class="info-label">이름</span>
+				<span class="info-data">{{ deliveryInfo?.name }}</span>
+			</div>
+			<div class="info-row">
+				<span class="info-label">연락처</span>
+				<span class="info-data">{{ deliveryInfo?.contact }}</span>
+			</div>
+			<div class="info-row">
+				<span class="info-label">이메일</span>
+				<span class="info-data">{{ deliveryInfo?.email }}</span>
+			</div>
+			<div class="info-row">
+				<span class="info-label">주소</span>
+				<span class="info-data">{{
+					deliveryInfo?.address + deliveryInfo?.addressDetail || ''
+				}}</span>
+			</div>
+		</div>
+
+		<div class="order-info">
+			<h2>결제 정보</h2>
+			<div class="info-row">
+				<span class="info-label">결제 금액</span>
+				<span class="info-data">{{ deliveryInfo?.name }}</span>
+			</div>
+			<div class="info-row">
+				<span class="info-label">결제 수단</span>
+				<span class="info-data">{{ deliveryInfo?.contact }}</span>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -24,6 +56,7 @@
 	// Type
 	import { Product } from '@/types/product';
 	import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';
+	import { OrderDelivery } from '@/types/order';
 
 	export default defineComponent({
 		components: { OrderProduct },
@@ -33,6 +66,7 @@
 
 			const product = ref<Product>({} as Product);
 			const selectedOption = ref<OrderOption[]>([]);
+			const deliveryInfo = ref<OrderDelivery>({} as OrderDelivery);
 
 			onMounted(() => {
 				fetchData();
@@ -43,10 +77,12 @@
 				if (res?.data) {
 					product.value = res.data.product;
 					selectedOption.value = res.data.order.option;
+					deliveryInfo.value = res.data.order.deliveryInfo;
 				}
 			};
 
 			return {
+				deliveryInfo,
 				product,
 				selectedOption,
 			};
@@ -57,10 +93,33 @@
 <style lang="scss" scoped>
 	.order-complete {
 		margin-top: var(--space-small);
+		padding: 0 var(--space-x-small);
 		& h1 {
 			padding: 0 var(--space-small);
-			font-size: var(--font-size-x-small);
+			font-size: var(--font-size-small);
 			font-weight: bold;
+		}
+
+		& .order-info {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-small);
+			margin-top: var(--space-small);
+
+			& h2 {
+				margin-top: var(--space-small);
+				font-size: var(--font-size-x-small);
+				font-weight: bold;
+			}
+
+			& .info-row {
+				display: flex;
+
+				& .info-label {
+					color: #999;
+					width: 25%;
+				}
+			}
 		}
 	}
 </style>

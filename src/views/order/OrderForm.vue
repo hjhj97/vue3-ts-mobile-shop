@@ -17,7 +17,7 @@
 			</div>
 
 			<div class="order-section">
-				<OrderPayment />
+				<OrderPayment @select-payment="onSelectPayment" />
 			</div>
 
 			<BottomFixed>
@@ -44,7 +44,7 @@
 	// npm 라이브러리
 	import { useForm } from 'vee-validate';
 	// Type
-	import { OrderForm } from '@/types/order';
+	import { OrderForm, PayMethod } from '@/types/order';
 	import { Product } from '@/types/product';
 	import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';
 
@@ -94,11 +94,17 @@
 				}
 			};
 
+			const onSelectPayment = ({ payMethod }: { payMethod: PayMethod }) => {
+				console.log(payMethod);
+			};
+
 			return {
 				totalPrice,
 				selectedOption,
 				product,
+				//
 				onSubmit,
+				onSelectPayment,
 			};
 		},
 	});
