@@ -34,7 +34,7 @@
 		</div>
 
 		<TeleportModal v-if="isOpen">
-			<AddressBS @close-modal="closeModal" />
+			<AddressBS @close-modal="closeModal" @send-address="onSendAddress" />
 		</TeleportModal>
 	</div>
 </template>
@@ -80,11 +80,19 @@
 					},
 				},
 			);
+
+			const onSendAddress = (data: { addr: string; ZIP_CD: string }) => {
+				deliveryInfo.value.address = data.addr;
+				deliveryInfo.value.zipcd = data.ZIP_CD;
+				closeModal();
+			};
 			return {
-				openModal,
-				closeModal,
 				deliveryInfo,
 				isOpen,
+				//
+				onSendAddress,
+				openModal,
+				closeModal,
 			};
 		},
 	});

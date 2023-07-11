@@ -1,4 +1,5 @@
 import axios from '@/plugins/axiosSetup';
+import { OrderForm } from '@/types/order';
 
 export const requestOrder = async (payload: any) => {
 	const res = await axios.post(`/order`, payload);
@@ -10,8 +11,8 @@ export const getOrderInfo = async (orderId: number | string) => {
 	return res.data;
 };
 
-export const requestPay = async (orderId: number | string) => {
-	const res = await axios.post(`/pay/${orderId}`);
+export const requestPay = async (orderId: number | string, orderData: OrderForm) => {
+	const res = await axios.post(`/pay/${orderId}`, orderData);
 	return res.data;
 };
 

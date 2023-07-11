@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { products } from './data';
+import { OrderForm } from '@/types/order';
 
 const orders: any[] = [];
 
@@ -63,8 +64,17 @@ export const handlers = [
 	}),
 
 	// 주문페이지 - 결제 요청
-	rest.post('/pay/:orderId', (req, res, ctx) => {
+	rest.post('/pay/:orderId', async (req, res, ctx) => {
 		const { orderId } = req.params;
+		const { id, options, deliveryInfo } = await req.json<OrderForm>();
+
+		const idx = orders.findIndex((order) => order.orderId == orderId);
+		console.log(idx);
+		if (idx !== -1) {
+			orders[idx].deliveryInfo = deliveryInfo;
+			console.log(orders[idx]);
+		}
+
 		return res(
 			ctx.json({
 				success: true,

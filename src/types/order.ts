@@ -1,3 +1,5 @@
+import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';
+
 export interface OrderDelivery {
 	name: string;
 	contact: string;
@@ -8,6 +10,8 @@ export interface OrderDelivery {
 }
 
 export interface OrderForm {
+	id: number;
+	options: OrderOption[];
 	deliveryInfo: OrderDelivery;
 }
 

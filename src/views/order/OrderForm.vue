@@ -38,6 +38,7 @@
 	import { computed, defineComponent, onMounted, ref } from 'vue';
 	import { useRoute } from 'vue-router';
 	import { getTotalPrice } from '@/utils/price';
+	import router from '@/router';
 	// API
 	import { getOrderInfo, requestPay } from '@/api/order';
 	// npm 라이브러리
@@ -78,8 +79,11 @@
 			};
 
 			const onRequestPay = handleSubmit(async (orderData: OrderForm) => {
-				const res = await requestPay(orderId);
-				console.log(res);
+				orderData.id = product.value.id;
+				orderData.options = selectedOption.value;
+
+				const res = await requestPay(orderId, orderData);
+				router.replace({ name: 'OrderComplete', params: { orderId } });
 			});
 
 			const fetchData = async () => {

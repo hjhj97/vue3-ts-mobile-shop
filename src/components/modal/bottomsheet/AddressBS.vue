@@ -21,7 +21,6 @@
 				if (addressEl.childElementCount > 0) {
 					addressEl.firstChild!.remove();
 				}
-				console.log(addressEl);
 
 				let currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
 				if (window.daum?.Postcode) {
