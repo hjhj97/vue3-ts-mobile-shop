@@ -16,7 +16,7 @@
 		<div class="order-input-wrapper zipcd">
 			<label for="order-zipcd">우편번호</label>
 			<input type="text" id="order-zipcd" disabled v-model="deliveryInfo.zipcd" />
-			<Button theme="primary">검색</Button>
+			<Button theme="primary" @click="isOpen = true">검색</Button>
 		</div>
 		<div class="order-input-wrapper address">
 			<label for="order-address">주소</label>
@@ -32,27 +32,40 @@
 			<label for="order-address_detail">상세주소</label>
 			<input type="text" id="order-address_detail" v-model="deliveryInfo.addressDetail" />
 		</div>
+
+		<TeleportModal v-if="isOpen">
+			<AddressBS @close-modal="closeModal" />
+		</TeleportModal>
 	</div>
 </template>
 
 <script lang="ts">
 	// 컴포넌트
 	import Button from '../control/Button.vue';
+	import AddressBS from '../modal/bottomsheet/AddressBS.vue';
+	import TeleportModal from '../modal/TeleportModal.vue';
 	// vue 라이브러리
 	import { defineComponent } from 'vue';
+	// composition
+	import useModal from '@/compositions/useModal';
 	// npm 라이브러리
 	import { useField } from 'vee-validate';
 	// Type
 	import { OrderDelivery } from '@/types/order';
 
 	export default defineComponent({
-		components: { Button },
+		components: { Button, AddressBS, TeleportModal },
 		setup() {
+			const { openModal, closeModal, isOpen } = useModal();
 			const { value: deliveryInfo } = useField<OrderDelivery>(
 				'deliveryInfo',
 				(values) => {
 					if (!values.name) {
 						return '주문자 이름을 입력해주세요';
+					} else if (!values.contact) {
+						return '연락처를 입력해주세요';
+					} else if (!values.zipcd || !values.address) {
+						return '주소를 입력해주세요';
 					} else {
 						return true;
 					}
@@ -68,7 +81,9 @@
 				},
 			);
 			return {
+				closeModal,
 				deliveryInfo,
+				isOpen,
 			};
 		},
 	});

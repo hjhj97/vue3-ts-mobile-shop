@@ -19,7 +19,7 @@
 		components: { OrderProduct },
 		setup() {
 			const route = useRoute();
-			const { orderId } = route.params.orderId as string;
+			const orderId = route.params.orderId as string;
 
 			onMounted(() => {
 				fetchData();

@@ -1,35 +1,31 @@
 <template>
-	<div class="bs">
-		<div class="bs-wrapper">
-			<div @click="$emit('close-modal')" class="bs-top-btn">
-				<img src="@/assets/image/icon/x.svg" />
-			</div>
-			<div class="bs-content">
-				<ul class="option-list">
-					<li class="option-item" v-for="option in selectedOption" :key="option.optionId">
-						<div class="option-list__top">
-							<span> {{ option.optionTitle }} {{ $priceFormat(option.optionPrice) }}원</span>
-						</div>
+	<BaseBS @close-modal="$emit('close-modal')">
+		<template #content>
+			<ul class="option-list">
+				<li class="option-item" v-for="option in selectedOption" :key="option.optionId">
+					<div class="option-list__top">
+						<span> {{ option.optionTitle }} {{ $priceFormat(option.optionPrice) }}원</span>
+					</div>
 
-						<ProductAmount v-bind="{ option }" @change-amount="onChangeAmount" />
-					</li>
-				</ul>
-			</div>
+					<ProductAmount v-bind="{ option }" @change-amount="onChangeAmount" />
+				</li>
+			</ul>
+		</template>
 
-			<div class="bs-bottom">
-				<Button theme="primary" @click="onRequestOrder">
-					<span v-if="totalPrice > 0"> 총 {{ $priceFormat(totalPrice) }}원 </span>
-					구매</Button
-				>
-			</div>
-		</div>
-	</div>
+		<template #bottom>
+			<Button theme="primary" @click="onRequestOrder">
+				<span v-if="totalPrice > 0"> 총 {{ $priceFormat(totalPrice) }}원 </span>
+				구매</Button
+			>
+		</template>
+	</BaseBS>
 </template>
 
 <script lang="ts">
 	// 컴포넌트
 	import Button from '@/components/control/Button.vue';
 	import ProductAmount from '@/components/product/ProductAmount.vue';
+	import BaseBS from './BaseBS.vue';
 	// vue 라이브러리
 	import { computed, defineComponent, PropType, ref } from 'vue';
 	import { useRoute } from 'vue-router';
@@ -43,7 +39,7 @@
 	export type OrderOption = ProductOption & { amount: number };
 
 	export default defineComponent({
-		components: { Button, ProductAmount },
+		components: { Button, ProductAmount, BaseBS },
 		props: {
 			options: {
 				type: Array as PropType<ProductOption[]>,
@@ -93,60 +89,4 @@
 	});
 </script>
 
-<style lang="scss" scoped>
-	.bs {
-		position: absolute;
-		bottom: 0;
-		height: auto;
-		width: 100%;
-		background-color: #fff;
-		border-radius: 3% 3% 0 0;
-
-		& .bs-wrapper {
-			height: 50vh;
-			padding: 1rem;
-			display: flex;
-			flex-direction: column;
-			gap: 1rem;
-
-			& .bs-top-btn {
-				display: flex;
-				justify-content: flex-end;
-			}
-
-			& .bs-content {
-				& .option-list {
-					display: flex;
-					flex-direction: column;
-					gap: var(--space-x-small);
-
-					& .option-item {
-						display: flex;
-						flex-direction: column;
-						gap: var(--space-xx-small);
-						padding: 0.7rem 0.5rem;
-						border-radius: 0.2rem;
-						box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.08);
-						box-sizing: border-box;
-
-						& .option-list__top {
-						}
-					}
-				}
-			}
-
-			& .bs-bottom {
-				width: 100%;
-				position: fixed;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				padding: 1rem;
-				box-sizing: border-box;
-			}
-		}
-	}
-</style>
+<style lang="scss" scoped></style>
