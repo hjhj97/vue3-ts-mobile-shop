@@ -16,7 +16,7 @@
 		<div class="order-input-wrapper zipcd">
 			<label for="order-zipcd">우편번호</label>
 			<input type="text" id="order-zipcd" disabled v-model="deliveryInfo.zipcd" />
-			<Button theme="primary" @click="isOpen = true">검색</Button>
+			<Button theme="primary" @click="openModal">검색</Button>
 		</div>
 		<div class="order-input-wrapper address">
 			<label for="order-address">주소</label>
@@ -81,6 +81,7 @@
 				},
 			);
 			return {
+				openModal,
 				closeModal,
 				deliveryInfo,
 				isOpen,

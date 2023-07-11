@@ -6,14 +6,18 @@
 	</mobile-layout>
 </template>
 <script lang="ts">
-	import { defineComponent } from 'vue';
+	import { defineComponent, onMounted } from 'vue';
 	import Footer from './components/common/Footer.vue';
 	import Header from './components/common/Header.vue';
 	import MobileLayout from './components/layouts/MobileLayout.vue';
+	import { addGlobalScrollEvent } from './compositions/useScroll';
 
 	export default defineComponent({
 		components: { MobileLayout, Header, Footer },
 		setup() {
+			onMounted(() => {
+				addGlobalScrollEvent();
+			});
 			return {};
 		},
 	});
