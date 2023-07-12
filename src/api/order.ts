@@ -11,8 +11,8 @@ export const getOrderInfo = async (orderId: number | string) => {
 	return res.data;
 };
 
-export const requestPay = async (orderId: number | string, orderData: OrderForm) => {
-	const res = await axios.post(`/pay/${orderId}`, orderData);
+export const requestPay = async (orderData: OrderForm) => {
+	const res = await axios.post(`/pay/${orderData.orderId}`, orderData);
 	return res.data;
 };
 

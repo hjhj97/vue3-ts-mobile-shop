@@ -66,7 +66,7 @@ export const handlers = [
 	// 주문페이지 - 결제 요청
 	rest.post('/pay/:orderId', async (req, res, ctx) => {
 		const { orderId } = req.params;
-		const { id, options, deliveryInfo } = await req.json<OrderForm>();
+		const { productInfo, options, deliveryInfo } = await req.json<OrderForm>();
 
 		const idx = orders.findIndex((order) => order.orderId == orderId);
 		console.log(idx);

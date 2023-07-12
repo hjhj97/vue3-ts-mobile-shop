@@ -18,15 +18,16 @@
 <script lang="ts">
 	import { defineComponent, ref } from 'vue';
 	import { PayMethod, PAY_METHOD_NAME } from '@/types/order';
+	import { useOrderStore } from '@/stores/order';
 
 	export default defineComponent({
-		emits: ['select-payment'],
-		setup(_, { emit }) {
+		setup() {
 			const selectedPayMethod = ref<PayMethod>(PayMethod.KAKAO);
+			const orderStore = useOrderStore();
 
 			const onSelectPayment = (method: PayMethod) => {
 				selectedPayMethod.value = method;
-				emit('select-payment', { payMethod: selectedPayMethod.value });
+				orderStore.order.paymentInfo.payMethod = method;
 			};
 
 			return {

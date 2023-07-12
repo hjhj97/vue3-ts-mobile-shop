@@ -35,6 +35,7 @@
 	// Type
 	import { ProductOption } from '@/types/product';
 	import { getTotalPrice } from '@/utils/price';
+	import { useOrderStore } from '@/stores/order';
 
 	export type OrderOption = ProductOption & { amount: number };
 
@@ -48,6 +49,7 @@
 		},
 		emits: ['close-modal'],
 		setup(props) {
+			const orderStore = useOrderStore();
 			const route = useRoute();
 			const productId = route.params.productId as string;
 
@@ -58,16 +60,16 @@
 				})),
 			);
 
-			const totalPrice = computed(() => getTotalPrice(selectedOption));
+			const totalPrice = computed(() => getTotalPrice(selectedOption.value));
 
 			const onRequestOrder = async () => {
-				console.log(productId);
 				const res = await requestOrder({
 					productId,
 					option: selectedOption.value.filter((option) => option.amount > 0),
 				}).catch();
-				if (res?.data) {
+				if (res) {
 					const { order } = res.data;
+					orderStore.order.orderId = order.orderId;
 					router.push({ name: 'Order', params: { orderId: order.orderId } });
 				}
 			};

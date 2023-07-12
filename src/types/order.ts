@@ -1,4 +1,5 @@
 import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';
+import { Product } from './product';
 
 export interface OrderDelivery {
 	name: string;
@@ -9,10 +10,18 @@ export interface OrderDelivery {
 	addressDetail?: string;
 }
 
+export interface OrderPayment {
+	payPrice: number;
+	payMethod: PayMethod;
+}
+
 export interface OrderForm {
-	id: number;
+	//id: number;
+	productInfo: Product;
+	orderId: number;
 	options: OrderOption[];
 	deliveryInfo: OrderDelivery;
+	paymentInfo: OrderPayment;
 }
 
 export enum PayMethod {

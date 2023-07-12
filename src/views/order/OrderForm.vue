@@ -4,11 +4,12 @@
 			<div class="order-section">
 				<h2>
 					주문상품
-					{{ selectedOption.length }} 건
+					{{ options?.length }} 건
 				</h2>
 				<OrderProduct
-					v-bind="{ product, option }"
-					v-for="option in selectedOption"
+					v-bind="{ option }"
+					:product="productInfo"
+					v-for="option in options"
 					:key="option.optionId"
 				/>
 			</div>
@@ -17,7 +18,7 @@
 			</div>
 
 			<div class="order-section">
-				<OrderPayment @select-payment="onSelectPayment" />
+				<OrderPayment />
 			</div>
 
 			<BottomFixed>
@@ -35,10 +36,12 @@
 	import OrderProduct from '@/components/order/OrderProduct.vue';
 	import OrderPayment from '@/components/order/OrderPayment.vue';
 	// vue 라이브러리
-	import { computed, defineComponent, onMounted, ref } from 'vue';
+	import { computed, defineComponent, onMounted, ref, toRefs } from 'vue';
 	import { useRoute } from 'vue-router';
-	import { getTotalPrice } from '@/utils/price';
+	import { useOrderStore } from '@/stores/order';
 	import router from '@/router';
+	// compositions
+	import { getTotalPrice } from '@/utils/price';
 	// API
 	import { getOrderInfo, requestPay } from '@/api/order';
 	// npm 라이브러리
@@ -55,11 +58,16 @@
 			const route = useRoute();
 			const orderId = route.params.orderId as string;
 
-			const product = ref<Product>({} as Product);
-			const selectedOption = ref<OrderOption[]>([]);
+			const orderStore = useOrderStore();
+			const { options, productInfo } = toRefs(orderStore.order);
+			//const product = ref<Product>(orderStore.order.productInfo || {});
+			//const selectedOption = ref<OrderOption[]>(orderStore.order.options || []);
 
 			const totalPrice = computed(() => {
-				return getTotalPrice(selectedOption);
+				if (orderStore.order.options) {
+					return getTotalPrice(orderStore.order.options);
+				}
+				return 0;
 			});
 
 			onMounted(() => {
@@ -78,33 +86,30 @@
 				}
 			};
 
-			const onRequestPay = handleSubmit(async (orderData: OrderForm) => {
-				orderData.id = product.value.id;
-				orderData.options = selectedOption.value;
+			const onRequestPay = handleSubmit(async (_: OrderForm) => {
+				const { paymentInfo } = orderStore.order;
+				orderStore.order.paymentInfo = { ...paymentInfo, payPrice: totalPrice.value };
 
-				const res = await requestPay(orderId, orderData);
-				router.replace({ name: 'OrderComplete', params: { orderId } });
+				const res = await requestPay(orderStore.order).catch();
+				if (res) {
+					router.replace({ name: 'OrderComplete', params: { orderId } });
+				}
 			});
 
 			const fetchData = async () => {
 				const res = await getOrderInfo(orderId).catch();
 				if (res?.data) {
-					product.value = res.data.product;
-					selectedOption.value = res.data.order.option;
+					orderStore.order.productInfo = res.data.product;
+					orderStore.order.options = res.data.order.option;
 				}
-			};
-
-			const onSelectPayment = ({ payMethod }: { payMethod: PayMethod }) => {
-				console.log(payMethod);
 			};
 
 			return {
 				totalPrice,
-				selectedOption,
-				product,
+				options,
+				productInfo,
 				//
 				onSubmit,
-				onSelectPayment,
 			};
 		},
 	});

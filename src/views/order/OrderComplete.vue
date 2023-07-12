@@ -52,7 +52,7 @@
 	import { defineComponent, onMounted, ref } from 'vue';
 	import { useRoute } from 'vue-router';
 	// API
-	import { getCompletedOrderInfo, getOrderInfo } from '@/api/order';
+	import { getOrderInfo } from '@/api/order';
 	// Type
 	import { Product } from '@/types/product';
 	import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';

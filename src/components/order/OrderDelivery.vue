@@ -45,7 +45,7 @@
 	import AddressBS from '../modal/bottomsheet/AddressBS.vue';
 	import TeleportModal from '../modal/TeleportModal.vue';
 	// vue 라이브러리
-	import { defineComponent } from 'vue';
+	import { defineComponent, watch, watchEffect } from 'vue';
 	// composition
 	import useModal from '@/compositions/useModal';
 	// npm 라이브러리
@@ -53,10 +53,12 @@
 	// Type
 	import { OrderDelivery } from '@/types/order';
 	import { email } from '@vee-validate/rules';
+	import { useOrderStore } from '@/stores/order';
 
 	export default defineComponent({
 		components: { Button, AddressBS, TeleportModal },
 		setup() {
+			const orderStore = useOrderStore();
 			const { openModal, closeModal, isOpen } = useModal();
 			const { value: deliveryInfo } = useField<OrderDelivery>(
 				'deliveryInfo',
@@ -82,6 +84,16 @@
 						address: '',
 					},
 				},
+			);
+
+			watch(
+				deliveryInfo,
+				() => {
+					orderStore.$patch((state) => {
+						state.order.deliveryInfo = deliveryInfo.value;
+					});
+				},
+				{ deep: true },
 			);
 
 			const onSendAddress = (data: { addr: string; ZIP_CD: string }) => {
