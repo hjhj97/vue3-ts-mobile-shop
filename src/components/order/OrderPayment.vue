@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, ref } from 'vue';
+	import { defineComponent, onMounted, ref } from 'vue';
 	import { PayMethod, PAY_METHOD_NAME } from '@/types/order';
 	import { useOrderStore } from '@/stores/order';
 
@@ -24,7 +24,11 @@
 		setup() {
 			const selectedPayMethod = ref<PayMethod>(PayMethod.KAKAO);
 			const orderStore = useOrderStore();
-			orderStore.order.paymentInfo.payMethod = selectedPayMethod.value;
+
+			onMounted(() => {
+				const { paymentInfo } = orderStore.order;
+				orderStore.order.paymentInfo = { ...paymentInfo, payMethod: selectedPayMethod.value };
+			});
 
 			const onSelectPayment = (method: PayMethod) => {
 				selectedPayMethod.value = method;
