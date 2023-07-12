@@ -35,11 +35,11 @@
 			<h2>결제 정보</h2>
 			<div class="info-row">
 				<span class="info-label">결제 금액</span>
-				<span class="info-data">{{ deliveryInfo?.name }}</span>
+				<span class="info-data">{{ $priceFormat(paymentInfo?.payPrice) }}원</span>
 			</div>
 			<div class="info-row">
 				<span class="info-label">결제 수단</span>
-				<span class="info-data">{{ deliveryInfo?.contact }}</span>
+				<span class="info-data">{{ PAY_METHOD_NAME[paymentInfo?.payMethod] }}</span>
 			</div>
 		</div>
 	</div>
@@ -56,7 +56,7 @@
 	// Type
 	import { Product } from '@/types/product';
 	import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';
-	import { OrderDelivery } from '@/types/order';
+	import { OrderDelivery, OrderPayment, PAY_METHOD_NAME } from '@/types/order';
 
 	export default defineComponent({
 		components: { OrderProduct },
@@ -67,6 +67,7 @@
 			const product = ref<Product>({} as Product);
 			const selectedOption = ref<OrderOption[]>([]);
 			const deliveryInfo = ref<OrderDelivery>({} as OrderDelivery);
+			const paymentInfo = ref<OrderPayment>({} as OrderPayment);
 
 			onMounted(() => {
 				fetchData();
@@ -78,13 +79,16 @@
 					product.value = res.data.product;
 					selectedOption.value = res.data.order.option;
 					deliveryInfo.value = res.data.order.deliveryInfo;
+					paymentInfo.value = res.data.order.paymentInfo;
 				}
 			};
 
 			return {
 				deliveryInfo,
+				paymentInfo,
 				product,
 				selectedOption,
+				PAY_METHOD_NAME,
 			};
 		},
 	});
@@ -94,6 +98,7 @@
 	.order-complete {
 		margin-top: var(--space-small);
 		padding: 0 var(--space-x-small);
+		min-height: 100vh;
 		& h1 {
 			padding: 0 var(--space-small);
 			font-size: var(--font-size-small);

@@ -4,12 +4,12 @@
 			<div class="order-section">
 				<h2>
 					주문상품
-					{{ options?.length }} 건
+					{{ orderStore.order.options?.length ?? 1 }} 건
 				</h2>
 				<OrderProduct
 					v-bind="{ option }"
-					:product="productInfo"
-					v-for="option in options"
+					:product="orderStore.order?.productInfo"
+					v-for="option in orderStore.order?.options"
 					:key="option.optionId"
 				/>
 			</div>
@@ -59,7 +59,6 @@
 			const orderId = route.params.orderId as string;
 
 			const orderStore = useOrderStore();
-			const { options, productInfo } = toRefs(orderStore.order);
 			//const product = ref<Product>(orderStore.order.productInfo || {});
 			//const selectedOption = ref<OrderOption[]>(orderStore.order.options || []);
 
@@ -106,8 +105,7 @@
 
 			return {
 				totalPrice,
-				options,
-				productInfo,
+				orderStore,
 				//
 				onSubmit,
 			};

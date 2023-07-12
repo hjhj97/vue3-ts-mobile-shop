@@ -66,13 +66,13 @@ export const handlers = [
 	// 주문페이지 - 결제 요청
 	rest.post('/pay/:orderId', async (req, res, ctx) => {
 		const { orderId } = req.params;
-		const { productInfo, options, deliveryInfo } = await req.json<OrderForm>();
+		const { deliveryInfo, paymentInfo } = await req.json<OrderForm>();
 
 		const idx = orders.findIndex((order) => order.orderId == orderId);
 		console.log(idx);
 		if (idx !== -1) {
 			orders[idx].deliveryInfo = deliveryInfo;
-			console.log(orders[idx]);
+			orders[idx].paymentInfo = paymentInfo;
 		}
 
 		return res(

@@ -24,6 +24,7 @@
 		setup() {
 			const selectedPayMethod = ref<PayMethod>(PayMethod.KAKAO);
 			const orderStore = useOrderStore();
+			orderStore.order.paymentInfo.payMethod = selectedPayMethod.value;
 
 			const onSelectPayment = (method: PayMethod) => {
 				selectedPayMethod.value = method;
