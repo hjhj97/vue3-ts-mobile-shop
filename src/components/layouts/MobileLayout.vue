@@ -17,7 +17,6 @@
 <style scoped>
 	.mobile-layout {
 		margin: 0 auto;
-		height: 100vh;
 		max-width: 500px;
 		box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 	}
