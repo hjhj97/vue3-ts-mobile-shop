@@ -15,11 +15,11 @@ export interface OrderPayment {
 	payMethod: PayMethod;
 }
 
+export type OrderProduct = Omit<Product, 'options'> & { options: OrderOption[] };
+
 export interface OrderForm {
-	//id: number;
-	productInfo: Product;
-	orderId: number;
-	options: OrderOption[];
+	orderId: number; // 주문번호
+	productInfo: OrderProduct[];
 	deliveryInfo: OrderDelivery;
 	paymentInfo: OrderPayment;
 }

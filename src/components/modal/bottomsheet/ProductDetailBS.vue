@@ -36,6 +36,7 @@
 	import { ProductOption } from '@/types/product';
 	import { getTotalPrice } from '@/utils/price';
 	import { useOrderStore } from '@/stores/order';
+	import { OrderProduct } from '@/types/order';
 
 	export type OrderOption = ProductOption & { amount: number };
 
@@ -63,14 +64,20 @@
 			const totalPrice = computed(() => getTotalPrice(selectedOption.value));
 
 			const onRequestOrder = async () => {
-				const res = await requestOrder({
-					productId,
-					option: selectedOption.value.filter((option) => option.amount > 0),
-				}).catch();
+				// 상품과 선택된 옵션에 대한 정보 전달함
+
+				const orderProduct = [
+					{
+						productId: parseInt(productId),
+						option: selectedOption.value.filter((option) => option.amount > 0),
+					},
+				];
+
+				const res = await requestOrder(orderProduct).catch();
 				if (res) {
-					const { order } = res.data;
-					orderStore.order.orderId = order.orderId;
-					router.push({ name: 'Order', params: { orderId: order.orderId } });
+					const { orderId } = res.data;
+					orderStore.order.orderId = orderId;
+					router.push({ name: 'Order', params: { orderId } });
 				}
 			};
 
@@ -91,4 +98,20 @@
 	});
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+	.option-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-x-small);
+
+		& .option-item {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-xx-small);
+			padding: 0.7rem 0.5rem;
+			border-radius: 0.2rem;
+			box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.08);
+			box-sizing: border-box;
+		}
+	}
+</style>

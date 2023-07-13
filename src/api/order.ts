@@ -1,7 +1,8 @@
+import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';
 import axios from '@/plugins/axiosSetup';
-import { OrderForm } from '@/types/order';
+import { OrderForm, OrderProduct } from '@/types/order';
 
-export const requestOrder = async (payload: any) => {
+export const requestOrder = async (payload: { productId: number; option: OrderOption[] }[]) => {
 	const res = await axios.post(`/order`, payload);
 	return res.data;
 };

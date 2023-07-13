@@ -29,19 +29,25 @@ export const handlers = [
 	}),
 
 	rest.post('/order', async (req, res, ctx) => {
-		const { productId, option } = await req.json();
-		const newOrderData = {
-			orderId: new Date().getTime(),
-			productId,
-			option,
-		};
-		orders.push(newOrderData);
+		const orderProducts: any[] = await req.json();
+		const orderId = new Date().getTime();
+
+		orderProducts.forEach(({ productId, option }) => {
+			const foundProduct = products.find((product) => product.id == productId);
+			if (!foundProduct) return;
+
+			orders.push({
+				...foundProduct,
+				orderId,
+				options: option,
+			});
+		});
 
 		return res(
 			ctx.json({
 				success: true,
 				data: {
-					order: newOrderData,
+					orderId,
 				},
 			}),
 		);
@@ -49,15 +55,13 @@ export const handlers = [
 
 	rest.get('/order/:orderId', (req, res, ctx) => {
 		const { orderId } = req.params;
-		const orderData = orders.find((order) => order.orderId == orderId);
-		const found = products.find((product) => product.id == orderData.productId);
+		const orderDatas: any[] = orders.filter((order) => order.orderId == orderId);
 
 		return res(
 			ctx.json({
 				success: true,
 				data: {
-					product: found,
-					order: orderData,
+					products: orderDatas,
 				},
 			}),
 		);

@@ -1,43 +1,47 @@
 <template>
 	<section class="order-product">
 		<div class="product-box">
-			<div class="product-box-left">
-				<div class="product-image-wrapper"><img :src="product?.image" /></div>
-			</div>
-			<div class="product-box-right">
-				<div class="product-info">
-					<span class="product-brand">{{ product?.brand }}</span>
-					<span class="product-title">{{ product?.title }}</span>
-					<span class="product-option-title">{{ option?.optionTitle }}</span>
-					<div>
-						<span class="product-option-price">{{ $priceFormat(optionPrice) }} 원</span>
-						<span> | {{ option?.amount }}개</span>
+			<div class="product-wrap">
+				<div class="product-box-left">
+					<div class="product-image-wrapper"><img :src="product?.image" /></div>
+				</div>
+				<div class="product-box-right">
+					<div class="product-info">
+						<span class="product-brand">{{ product?.brand }}</span>
+						<span class="product-title">{{ product?.title }}</span>
 					</div>
 				</div>
 			</div>
+
+			<ul class="option-list">
+				<li class="option-item" v-for="option in product.options" :key="option.optionId">
+					<div class="option-list__top">
+						<span> {{ option.optionTitle }} {{ $priceFormat(option.optionPrice) }}원</span>
+					</div>
+
+					<ProductAmount v-bind="{ option }" :initialAmount="option.amount" />
+				</li>
+			</ul>
 		</div>
 	</section>
 </template>
 
 <script lang="ts">
-	import { Product } from '@/types/product';
+	import { OrderProduct } from '@/types/order';
 	import { getOptionPrice } from '@/utils/price';
 	import { computed, defineComponent, PropType } from 'vue';
-	import { OrderOption } from '../modal/bottomsheet/ProductDetailBS.vue';
+	import ProductAmount from '../product/ProductAmount.vue';
 
 	export default defineComponent({
+		components: { ProductAmount },
 		props: {
 			product: {
-				type: Object as PropType<Product>,
-				required: true,
-			},
-			option: {
-				type: Object as PropType<OrderOption>,
+				type: Object as PropType<OrderProduct>,
 				required: true,
 			},
 		},
 		setup(props) {
-			const optionPrice = computed(() => getOptionPrice(props.option, props.option.amount));
+			const optionPrice = computed(() => getOptionPrice(props.product.options[0]));
 			return { optionPrice };
 		},
 	});
@@ -49,57 +53,83 @@
 
 		& .product-box {
 			display: flex;
+			flex-direction: column;
 			gap: 1rem;
-			align-items: center;
 			padding: 0.5rem;
-			height: 120px;
+			height: auto;
 			border: 1px solid #ddd;
-			border-radius: 1rem;
+			border-radius: var(--space-xx-small);
 			box-sizing: border-box;
 
-			& .product-box-left {
-				width: 30%;
-				height: 100%;
-				& .product-image-wrapper {
-					display: flex;
-					align-items: center;
+			& .product-wrap {
+				display: flex;
+				width: 100%;
+				gap: var(--space-x-small);
+
+				& .product-box-left {
+					width: 30%;
 					height: 100%;
-					& img {
-						width: 100%;
+					& .product-image-wrapper {
+						display: flex;
+						align-items: center;
 						height: 100%;
-						object-fit: contain;
+						& img {
+							width: 100%;
+							height: 100%;
+							object-fit: contain;
+						}
+					}
+				}
+
+				& .product-box-right {
+					display: flex;
+					flex-direction: column;
+					width: 65%;
+					height: 100%;
+					& .product-info {
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						gap: 0.3rem;
+						height: 100px;
+
+						& .product-brand {
+							font-size: var(--font-size-xx-small);
+							font-weight: bold;
+						}
+						& .product-title {
+							font-size: var(--font-size-xx--small);
+							font-weight: 400;
+						}
 					}
 				}
 			}
 
-			& .product-box-right {
+			& .option-list {
 				display: flex;
-				align-items: center;
-				width: 65%;
-				height: 100%;
-				& .product-info {
+				flex-direction: column;
+				justify-content: flex-end;
+				width: 100%;
+				gap: var(--space-x-small);
+
+				& .option-item {
 					display: flex;
 					flex-direction: column;
-					gap: 0.3rem;
+					gap: var(--space-xx-small);
+					padding: 0.7rem 0.5rem;
+					border-radius: 0.2rem;
+					box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.08);
+					box-sizing: border-box;
+				}
+				& .product-option-title {
+					font-size: var(--font-size-xxx--small);
+					color: #bbb;
+					font-weight: 400;
+				}
 
-					& .product-brand {
-						font-size: var(--font-size-xx-small);
-						font-weight: bold;
-					}
-					& .product-title {
-						font-size: var(--font-size-xx--small);
-						font-weight: 400;
-					}
-					& .product-option-title {
-						font-size: var(--font-size-xxx--small);
-						color: #bbb;
-						font-weight: 400;
-					}
-
-					& .product-option-price {
-						font-size: var(--font-size-x-small);
-						font-weight: 600;
-					}
+				& .product-option-price {
+					font-size: var(--font-size-x-small);
+					font-weight: 600;
 				}
 			}
 		}

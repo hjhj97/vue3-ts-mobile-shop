@@ -23,11 +23,15 @@
 				type: Object as PropType<ProductOption>,
 				required: true,
 			},
+			initialAmount: {
+				type: Number,
+				default: 0,
+			},
 		},
 		emits: ['change-amount'],
 		setup(props, { emit }) {
-			const amount = ref<number>(0);
-			const totalPrice = computed(() => getOptionPrice(props.option, amount.value));
+			const amount = ref<number>(props.initialAmount);
+			const totalPrice = computed(() => getOptionPrice({ ...props.option, amount: amount.value }));
 
 			const handleAmount = (diff: number | Event) => {
 				let newAmount: number;

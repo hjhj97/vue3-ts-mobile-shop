@@ -4,13 +4,12 @@
 			<div class="order-section">
 				<h2>
 					주문상품
-					{{ orderStore.order.options?.length ?? 1 }} 건
+					{{ orderStore.order.productInfo?.length ?? 1 }} 건
 				</h2>
 				<OrderProduct
-					v-bind="{ option }"
-					:product="orderStore.order?.productInfo"
-					v-for="option in orderStore.order?.options"
-					:key="option.optionId"
+					v-bind="{ product }"
+					v-for="product in orderStore.order?.productInfo"
+					:key="product.id"
 				/>
 			</div>
 			<div class="order-section">
@@ -48,8 +47,6 @@
 	import { useForm } from 'vee-validate';
 	// Type
 	import { OrderForm, PayMethod } from '@/types/order';
-	import { Product } from '@/types/product';
-	import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';
 
 	export default defineComponent({
 		components: { BottomFixed, Button, OrderProduct, OrderDelivery, OrderPayment },
@@ -59,13 +56,11 @@
 			const orderId = route.params.orderId as string;
 
 			const orderStore = useOrderStore();
-			//const product = ref<Product>(orderStore.order.productInfo || {});
-			//const selectedOption = ref<OrderOption[]>(orderStore.order.options || []);
 
 			const totalPrice = computed(() => {
-				if (orderStore.order.options) {
-					return getTotalPrice(orderStore.order.options);
-				}
+				//if (orderStore.order.options) {
+				//	return getTotalPrice(orderStore.order.options);
+				//}
 				return 0;
 			});
 
@@ -98,8 +93,7 @@
 			const fetchData = async () => {
 				const res = await getOrderInfo(orderId).catch();
 				if (res?.data) {
-					orderStore.order.productInfo = res.data.product;
-					orderStore.order.options = res.data.order.option;
+					orderStore.order.productInfo = res.data.products;
 				}
 			};
 

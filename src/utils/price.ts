@@ -4,5 +4,4 @@ import { ProductOption } from '@/types/product';
 export const getTotalPrice = (selectedOption: OrderOption[]) =>
 	selectedOption.reduce((acc, cur) => acc + cur.optionPrice * cur.amount, 0);
 
-export const getOptionPrice = (option: { optionPrice: number }, amount: number) =>
-	option.optionPrice * amount;
+export const getOptionPrice = (option: OrderOption) => option.optionPrice * option.amount;
