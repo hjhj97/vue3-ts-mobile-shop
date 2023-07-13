@@ -19,7 +19,11 @@
 						<span> {{ option.optionTitle }} {{ $priceFormat(option.optionPrice) }}원</span>
 					</div>
 
-					<ProductAmount v-bind="{ option }" :initialAmount="option.amount" />
+					<ProductAmount
+						v-bind="{ option }"
+						:initialAmount="option.amount"
+						:isAmountChangeable="false"
+					/>
 				</li>
 			</ul>
 		</div>

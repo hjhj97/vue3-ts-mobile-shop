@@ -58,9 +58,12 @@
 			const orderStore = useOrderStore();
 
 			const totalPrice = computed(() => {
-				//if (orderStore.order.options) {
-				//	return getTotalPrice(orderStore.order.options);
-				//}
+				if (orderStore.order.productInfo) {
+					return orderStore.order.productInfo.reduce(
+						(acc, product) => acc + getTotalPrice(product.options),
+						0,
+					);
+				}
 				return 0;
 			});
 

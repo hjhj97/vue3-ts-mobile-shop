@@ -1,9 +1,9 @@
 <template>
 	<div class="option-list__bottom">
 		<div class="amount-button">
-			<button @click="handleAmount(-1)">-</button>
-			<input type="number" :value="amount" @change="handleAmount" />
-			<button @click="handleAmount(+1)">+</button>
+			<button @click="handleAmount(-1)" :disabled="!isAmountChangeable">-</button>
+			<input type="number" :value="amount" @change="handleAmount" :readonly="!isAmountChangeable" />
+			<button @click="handleAmount(+1)" :disabled="!isAmountChangeable">+</button>
 		</div>
 		<span>{{ $priceFormat(totalPrice) }}원</span>
 	</div>
@@ -26,6 +26,10 @@
 			initialAmount: {
 				type: Number,
 				default: 0,
+			},
+			isAmountChangeable: {
+				type: Boolean,
+				default: true,
 			},
 		},
 		emits: ['change-amount'],
