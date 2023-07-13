@@ -31,7 +31,7 @@
 			color: #fff;
 		}
 		&.secondary {
-			background-color: yellowgreen;
+			background-color: #ddd;
 		}
 		&.reverse {
 			background-color: #fff;

@@ -15,6 +15,11 @@ export interface OrderPayment {
 	payMethod: PayMethod;
 }
 
+export enum OrderType {
+	DIRECT = 'DIRECT', // 바로구매
+	CART = 'CART', // 장바구니
+}
+
 export type OrderProduct = Omit<Product, 'options'> & { options: OrderOption[] };
 
 export interface OrderForm {

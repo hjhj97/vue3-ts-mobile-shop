@@ -13,10 +13,10 @@
 		</template>
 
 		<template #bottom>
-			<Button theme="primary" @click="onRequestOrder">
-				<span v-if="totalPrice > 0"> 총 {{ $priceFormat(totalPrice) }}원 </span>
-				구매</Button
-			>
+			<div class="button-wrapper">
+				<Button theme="secondary" @click="onAddCart"> 장바구니 담기 </Button>
+				<Button theme="primary" @click="onRequestOrder"> 구매 </Button>
+			</div>
 		</template>
 	</BaseBS>
 </template>
@@ -32,11 +32,11 @@
 	import router from '@/router';
 	// API
 	import { requestOrder } from '@/api/order';
+	import { addCart } from '@/api/cart';
 	// Type
 	import { ProductOption } from '@/types/product';
 	import { getTotalPrice } from '@/utils/price';
 	import { useOrderStore } from '@/stores/order';
-	import { OrderProduct } from '@/types/order';
 
 	export type OrderOption = ProductOption & { amount: number };
 
@@ -65,7 +65,6 @@
 
 			const onRequestOrder = async () => {
 				// 상품과 선택된 옵션에 대한 정보 전달함
-
 				const orderProduct = [
 					{
 						productId: parseInt(productId),
@@ -87,12 +86,24 @@
 				selectedOption.value[found].amount = amount;
 			};
 
+			const onAddCart = async () => {
+				const orderProduct = [
+					{
+						productId: parseInt(productId),
+						option: selectedOption.value.filter((option) => option.amount > 0),
+					},
+				];
+
+				const res = await addCart(orderProduct).catch();
+			};
+
 			return {
 				totalPrice,
 				selectedOption,
 				//
 				onRequestOrder,
 				onChangeAmount,
+				onAddCart,
 			};
 		},
 	});
@@ -113,5 +124,11 @@
 			box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.08);
 			box-sizing: border-box;
 		}
+	}
+
+	.button-wrapper {
+		display: flex;
+		gap: var(--space-xx-small);
+		width: 100%;
 	}
 </style>

@@ -22,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
 		name: 'OrderComplete',
 		component: () => import(/* webpackChunkName: "about" */ '../views/order/OrderComplete.vue'),
 	},
+	{
+		path: '/cart',
+		name: 'CartView',
+		component: () => import(/* webpackChunkName: "about" */ '../views/cart/CartView.vue'),
+	},
 ];
 
 const router = createRouter({

@@ -14,9 +14,9 @@
 			<div>
 				<img src="@/assets/image/icon/search.svg" />
 			</div>
-			<div>
+			<router-link :to="{ name: 'CartView' }">
 				<img src="@/assets/image/icon/shopping-cart.svg" />
-			</div>
+			</router-link>
 		</div>
 	</header>
 </template>
