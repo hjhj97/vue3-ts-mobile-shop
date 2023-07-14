@@ -40,18 +40,16 @@
 
 <style lang="scss" scoped>
 	.product-list {
-		flex-wrap: wrap;
-		display: flex;
-		gap: 1rem;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-x-small);
 		margin: 2rem 1rem;
 
 		& .product-item {
+			padding: var(--space-xx-small);
 			display: flex;
 			flex-direction: column;
-			gap: 1rem;
-			width: calc(calc(100% / 2) - 1.5rem);
-			padding: var(--space-xx-small);
-			/*margin-bottom: var(--space-mid);*/
+			gap: var(--space-small);
 
 			& .product-image-wrapper {
 				width: 100%;
