@@ -95,6 +95,9 @@
 				];
 
 				const res = await addCart(orderProduct).catch();
+				if (res) {
+					alert('장바구니에 추가했습니다.');
+				}
 			};
 
 			return {
