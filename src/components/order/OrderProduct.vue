@@ -1,9 +1,17 @@
 <template>
 	<section class="order-product">
 		<div class="product-box">
-			<div v-if="deleteButton" @click="$emit('delete-cart-item', product)" class="cart-delete-btn">
-				<img src="@/assets/image/icon/x.svg" />
+			<div v-if="inCartPage" class="only-in-cart">
+				<input
+					type="checkbox"
+					@change="(e) => $emit('select-cart-item', product,(e.target as HTMLInputElement).checked)"
+					:checked="defaultCheck"
+				/>
+				<div @click="$emit('delete-cart-item', product)">
+					<img src="@/assets/image/icon/x.svg" />
+				</div>
 			</div>
+
 			<div class="product-wrap">
 				<div class="product-box-left">
 					<div class="product-image-wrapper"><img :src="product?.image" /></div>
@@ -41,13 +49,17 @@
 
 	export default defineComponent({
 		components: { ProductAmount },
-		emits: ['delete-cart-item'],
+		emits: ['delete-cart-item', 'select-cart-item'],
 		props: {
 			product: {
 				type: Object as PropType<OrderProduct>,
 				required: true,
 			},
-			deleteButton: {
+			inCartPage: {
+				type: Boolean,
+				default: false,
+			},
+			defaultCheck: {
 				type: Boolean,
 				default: false,
 			},
@@ -73,9 +85,9 @@
 			border-radius: var(--space-xx-small);
 			box-sizing: border-box;
 
-			& .cart-delete-btn {
+			& .only-in-cart {
 				display: flex;
-				justify-content: flex-end;
+				justify-content: space-between;
 			}
 
 			& .product-wrap {
