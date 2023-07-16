@@ -1,7 +1,7 @@
 <template>
 	<div class="no-footer bottom-fixed">
 		<form @submit="onSubmit" class="order-form">
-			<div class="order-section">
+			<div class="order-section product">
 				<h2>
 					주문상품
 					{{ orderStore.order.productInfo?.length ?? 1 }} 건
@@ -114,11 +114,15 @@
 	.order-form {
 		& .order-section {
 			border-top: 10px solid #eee;
+			&.product {
+				margin: var(--space-x-small);
+				border: none;
+			}
 
 			& h2 {
 				font-size: var(--font-size-x-small);
 				font-weight: bold;
-				margin: 1rem;
+				margin: var(--space-x-small) 0;
 			}
 		}
 	}

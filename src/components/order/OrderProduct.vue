@@ -1,6 +1,9 @@
 <template>
 	<section class="order-product">
 		<div class="product-box">
+			<div v-if="deleteButton" @click="$emit('delete-cart-item', product)" class="cart-delete-btn">
+				<img src="@/assets/image/icon/x.svg" />
+			</div>
 			<div class="product-wrap">
 				<div class="product-box-left">
 					<div class="product-image-wrapper"><img :src="product?.image" /></div>
@@ -38,10 +41,15 @@
 
 	export default defineComponent({
 		components: { ProductAmount },
+		emits: ['delete-cart-item'],
 		props: {
 			product: {
 				type: Object as PropType<OrderProduct>,
 				required: true,
+			},
+			deleteButton: {
+				type: Boolean,
+				default: false,
 			},
 		},
 		setup(props) {
@@ -53,7 +61,7 @@
 
 <style lang="scss" scoped>
 	.order-product {
-		margin: var(--space-x-small);
+		/*margin: var(--space-x-small);*/
 
 		& .product-box {
 			display: flex;
@@ -64,6 +72,11 @@
 			border: 1px solid #ddd;
 			border-radius: var(--space-xx-small);
 			box-sizing: border-box;
+
+			& .cart-delete-btn {
+				display: flex;
+				justify-content: flex-end;
+			}
 
 			& .product-wrap {
 				display: flex;

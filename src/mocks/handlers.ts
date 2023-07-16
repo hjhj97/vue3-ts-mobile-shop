@@ -3,7 +3,7 @@ import { products } from './data';
 import { OrderForm } from '@/types/order';
 
 const orders: any[] = [];
-const carts: any[] = [];
+let carts: any[] = [];
 
 export const handlers = [
 	// getProducts - 상품 목록
@@ -89,6 +89,18 @@ export const handlers = [
 				data: {
 					orderId,
 				},
+			}),
+		);
+	}),
+
+	rest.post('/deleteCart', async (req, res, ctx) => {
+		const { productId } = await req.json();
+		const newCarts = carts.filter((cart) => cart.id !== productId);
+		carts = newCarts;
+
+		return res(
+			ctx.json({
+				success: true,
 			}),
 		);
 	}),
