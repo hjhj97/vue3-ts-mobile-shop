@@ -20,7 +20,9 @@
 				/>
 
 				<BottomFixed>
-					<Button theme="primary">총 {{ $priceFormat(totalPrice) }}원 주문하기</Button>
+					<Button theme="primary" @click="onClickCartOrder"
+						>총 {{ $priceFormat(totalPrice) }}원 주문하기</Button
+					>
 				</BottomFixed>
 			</div>
 			<p v-else>장바구니에 담은 상품이 없습니다.</p>
@@ -35,18 +37,22 @@
 	import OrderProductComp from '@/components/order/OrderProduct.vue';
 	// vue 라이브러리
 	import { computed, defineComponent, onMounted, ref } from 'vue';
+	import { useOrderStore } from '@/stores/order';
+	import router from '@/router';
 	// composition
 	import { getTotalPrice } from '@/utils/price';
 	// API
 	import { deleteCartItem, getCartList } from '@/api/cart';
 	// Type
 	import { OrderProduct } from '@/types/order';
+	import { requestOrder } from '@/api/order';
 
 	export default defineComponent({
 		components: { OrderProductComp, BottomFixed, Button },
 		setup() {
 			const orderProducts = ref<OrderProduct[]>([]);
 			const selectedProducts = ref<OrderProduct[]>([]);
+			const orderStore = useOrderStore();
 			const isSelectAll = computed<boolean>({
 				get() {
 					// 모든 상품이 체크되었는지 확인
@@ -94,6 +100,19 @@
 				return selectedProducts.value.findIndex((selected) => selected.id === id) > -1;
 			};
 
+			const onClickCartOrder = async () => {
+				const orderArray = selectedProducts.value.map((product) => ({
+					productId: product.id,
+					option: product.options,
+				}));
+				const res = await requestOrder(orderArray).catch();
+				if (res) {
+					const { orderId } = res.data;
+					orderStore.order.orderId = orderId;
+					router.push({ name: 'Order', params: { orderId } });
+				}
+			};
+
 			return {
 				selectedProducts,
 				orderProducts,
@@ -102,6 +121,7 @@
 				//
 				onDeleteCartItem,
 				onSelectCartItem,
+				onClickCartOrder,
 				checkIncluded,
 			};
 		},
