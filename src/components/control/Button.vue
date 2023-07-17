@@ -26,6 +26,10 @@
 		font-size: var(--font-size-xx-small);
 		font-weight: 600;
 
+		&:disabled {
+			opacity: 0.3;
+		}
+
 		&.primary {
 			background-color: var(--color-primary);
 			color: #fff;

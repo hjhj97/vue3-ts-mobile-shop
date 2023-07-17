@@ -20,7 +20,10 @@
 				/>
 
 				<BottomFixed>
-					<Button theme="primary" @click="onClickCartOrder"
+					<Button
+						theme="primary"
+						@click="onClickCartOrder"
+						:disabled="selectedProducts.length === 0"
 						>총 {{ $priceFormat(totalPrice) }}원 주문하기</Button
 					>
 				</BottomFixed>
