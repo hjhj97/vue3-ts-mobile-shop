@@ -14,8 +14,10 @@
 
 		<template #bottom>
 			<div class="button-wrapper">
-				<Button theme="secondary" @click="onAddCart"> 장바구니 담기 </Button>
-				<Button theme="primary" @click="onRequestOrder"> 구매 </Button>
+				<Button theme="secondary" @click="onAddCart" :disabled="!isSelected">
+					장바구니 담기
+				</Button>
+				<Button theme="primary" @click="onRequestOrder" :disabled="!isSelected"> 구매 </Button>
 			</div>
 		</template>
 	</BaseBS>
@@ -61,6 +63,9 @@
 				})),
 			);
 
+			const isSelected = computed(() =>
+				selectedOption.value.reduce((acc, option) => acc + option.amount, 0),
+			);
 			const totalPrice = computed(() => getTotalPrice(selectedOption.value));
 
 			const onRequestOrder = async () => {
@@ -101,6 +106,7 @@
 			return {
 				totalPrice,
 				selectedOption,
+				isSelected,
 				//
 				onRequestOrder,
 				onChangeAmount,
