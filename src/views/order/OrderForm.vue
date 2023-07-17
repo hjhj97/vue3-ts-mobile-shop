@@ -113,6 +113,9 @@
 <style lang="scss" scoped>
 	.order-form {
 		& .order-section {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-x-small);
 			border-top: 10px solid #eee;
 			&.product {
 				margin: var(--space-x-small);
