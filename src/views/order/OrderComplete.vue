@@ -1,12 +1,8 @@
 <template>
 	<div class="order-complete">
 		<h1>주문이 완료되었습니다</h1>
-		<div>
-			<OrderProduct
-				v-for="option in selectedOption"
-				:key="option.optionId"
-				v-bind="{ product, option }"
-			/>
+		<div class="order-section">
+			<OrderProductComp v-for="product in orderedProducts" :key="product.id" v-bind="{ product }" />
 		</div>
 
 		<div class="order-info">
@@ -47,25 +43,22 @@
 
 <script lang="ts">
 	// 컴포넌트
-	import OrderProduct from '@/components/order/OrderProduct.vue';
+	import OrderProductComp from '@/components/order/OrderProduct.vue';
 	// vue 라이브러리
 	import { defineComponent, onMounted, ref } from 'vue';
 	import { useRoute } from 'vue-router';
 	// API
 	import { getOrderInfo } from '@/api/order';
 	// Type
-	import { Product } from '@/types/product';
-	import { OrderOption } from '@/components/modal/bottomsheet/ProductDetailBS.vue';
-	import { OrderDelivery, OrderPayment, PAY_METHOD_NAME } from '@/types/order';
+	import { OrderDelivery, OrderPayment, OrderProduct, PAY_METHOD_NAME } from '@/types/order';
 
 	export default defineComponent({
-		components: { OrderProduct },
+		components: { OrderProductComp },
 		setup() {
 			const route = useRoute();
 			const orderId = route.params.orderId as string;
 
-			const product = ref<Product>({} as Product);
-			const selectedOption = ref<OrderOption[]>([]);
+			const orderedProducts = ref<OrderProduct[]>([]);
 			const deliveryInfo = ref<OrderDelivery>({} as OrderDelivery);
 			const paymentInfo = ref<OrderPayment>({} as OrderPayment);
 
@@ -76,18 +69,16 @@
 			const fetchData = async () => {
 				const res = await getOrderInfo(orderId).catch();
 				if (res?.data) {
-					product.value = res.data.product;
-					selectedOption.value = res.data.order.option;
-					deliveryInfo.value = res.data.order.deliveryInfo;
-					paymentInfo.value = res.data.order.paymentInfo;
+					orderedProducts.value = res.data.products;
+					deliveryInfo.value = res.data.products[0].deliveryInfo;
+					paymentInfo.value = res.data.products[0].paymentInfo;
 				}
 			};
 
 			return {
 				deliveryInfo,
 				paymentInfo,
-				product,
-				selectedOption,
+				orderedProducts,
 				PAY_METHOD_NAME,
 			};
 		},
@@ -99,10 +90,17 @@
 		margin-top: var(--space-small);
 		padding: 0 var(--space-x-small);
 		min-height: 100vh;
+
 		& h1 {
-			padding: 0 var(--space-small);
 			font-size: var(--font-size-small);
 			font-weight: bold;
+		}
+
+		& .order-section {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-x-small);
+			margin-top: var(--space-small);
 		}
 
 		& .order-info {
