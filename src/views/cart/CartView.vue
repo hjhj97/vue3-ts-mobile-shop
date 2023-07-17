@@ -2,7 +2,7 @@
 	<div class="cart">
 		<div class="cart-top">
 			<h2>장바구니</h2>
-			<div>
+			<div v-if="orderProducts?.length > 0">
 				<label for="cart-select-call">모두선택</label>
 				<input type="checkbox" id="cart-select-all" v-model="isSelectAll" />
 			</div>
@@ -105,10 +105,9 @@
 					productId: product.id,
 					option: product.options,
 				}));
-				const res = await requestOrder(orderArray).catch();
-				if (res) {
-					const { orderId } = res.data;
-					orderStore.order.orderId = orderId;
+
+				const orderId = await orderStore.REQUEST_ORDER(orderArray);
+				if (orderId) {
 					router.push({ name: 'Order', params: { orderId } });
 				}
 			};

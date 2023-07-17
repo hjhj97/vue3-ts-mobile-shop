@@ -72,10 +72,8 @@
 					},
 				];
 
-				const res = await requestOrder(orderProduct).catch();
-				if (res) {
-					const { orderId } = res.data;
-					orderStore.order.orderId = orderId;
+				const orderId = await orderStore.REQUEST_ORDER(orderProduct);
+				if (orderId) {
 					router.push({ name: 'Order', params: { orderId } });
 				}
 			};
