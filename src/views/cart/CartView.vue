@@ -18,6 +18,10 @@
 					@delete-cart-item="onDeleteCartItem"
 					@select-cart-item="onSelectCartItem"
 				/>
+
+				<BottomFixed>
+					<Button theme="primary">총 {{ $priceFormat(totalPrice) }}원 주문하기</Button>
+				</BottomFixed>
 			</div>
 			<p v-else>장바구니에 담은 상품이 없습니다.</p>
 		</div>
@@ -25,13 +29,21 @@
 </template>
 
 <script lang="ts">
+	// 컴포넌트
+	import BottomFixed from '@/components/control/BottomFixed.vue';
+	import Button from '@/components/control/Button.vue';
 	import OrderProductComp from '@/components/order/OrderProduct.vue';
+	// vue 라이브러리
 	import { computed, defineComponent, onMounted, ref } from 'vue';
+	// composition
+	import { getTotalPrice } from '@/utils/price';
+	// API
 	import { deleteCartItem, getCartList } from '@/api/cart';
+	// Type
 	import { OrderProduct } from '@/types/order';
 
 	export default defineComponent({
-		components: { OrderProductComp },
+		components: { OrderProductComp, BottomFixed, Button },
 		setup() {
 			const orderProducts = ref<OrderProduct[]>([]);
 			const selectedProducts = ref<OrderProduct[]>([]);
@@ -49,6 +61,10 @@
 					selectedProducts.value = tmp;
 				},
 			});
+
+			const totalPrice = computed(() =>
+				selectedProducts.value.reduce((acc, product) => acc + getTotalPrice(product.options), 0),
+			);
 
 			onMounted(() => {
 				fetchData();
@@ -82,6 +98,7 @@
 				selectedProducts,
 				orderProducts,
 				isSelectAll,
+				totalPrice,
 				//
 				onDeleteCartItem,
 				onSelectCartItem,
