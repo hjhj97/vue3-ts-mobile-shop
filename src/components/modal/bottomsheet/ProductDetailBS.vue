@@ -31,6 +31,7 @@
 	// vue 라이브러리
 	import { computed, defineComponent, PropType, ref } from 'vue';
 	import { useRoute } from 'vue-router';
+	import { useModalStore } from '@/stores/modal';
 	import router from '@/router';
 	// API
 	import { requestOrder } from '@/api/order';
@@ -90,6 +91,7 @@
 			};
 
 			const onAddCart = async () => {
+				const modalStore = useModalStore();
 				const orderProduct = [
 					{
 						productId: parseInt(productId),
@@ -99,7 +101,14 @@
 
 				const res = await addCart(orderProduct).catch();
 				if (res) {
-					alert('장바구니에 추가했습니다.');
+					modalStore.openPopup({
+						content: '장바구니에 추가했습니다.장바구니로 이동하시겠습니까?',
+						acceptText: '이동',
+						acceptCb: () => {
+							router.push({ name: 'CartView' });
+						},
+						rejectText: '더 볼래요',
+					});
 				}
 			};
 

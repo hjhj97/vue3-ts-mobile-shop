@@ -37,3 +37,28 @@
 		}
 	}
 }
+
+.popup {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: var(--space-mid);
+	border-radius: var(--space-small);
+	width: calc(100% - 4rem);
+	//height: auto;
+	min-height: 180px;
+	box-sizing: border-box;
+	background-color: #fff;
+
+	& .popup-content {
+	}
+
+	& .btn-wrapper {
+		display: flex;
+		gap: var(--space-xx-small);
+	}
+}
