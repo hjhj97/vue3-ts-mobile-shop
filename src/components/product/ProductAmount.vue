@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+	import { useModalStore } from '@/stores/modal';
 	import { ProductOption } from '@/types/product';
 	import { getOptionPrice } from '@/utils/price';
 	import { computed, defineComponent, ref, PropType } from 'vue';
@@ -49,7 +50,8 @@
 					amount.value = newAmount;
 					emit('change-amount', { optionId: props.option.optionId, amount: amount.value });
 				} else {
-					alert('0개 이상 99개 이하만 선택할 수 있습니다.');
+					const modalStore = useModalStore();
+					modalStore.openPopup({ content: '0개 이상 99개 이하만 선택할 수 있습니다.' });
 				}
 			};
 			return {
