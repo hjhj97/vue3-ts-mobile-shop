@@ -32,9 +32,6 @@
 		props: {
 			products: Array as PropType<Product[]>,
 		},
-		setup() {
-			return {};
-		},
 	});
 </script>
 

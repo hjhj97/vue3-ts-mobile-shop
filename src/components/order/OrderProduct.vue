@@ -32,8 +32,8 @@
 
 					<ProductAmount
 						v-bind="{ option }"
-						:initialAmount="option.amount"
-						:isAmountChangeable="false"
+						:initial-amount="option.amount"
+						:is-amount-changeable="false"
 					/>
 				</li>
 			</ul>

@@ -13,8 +13,8 @@
 					v-for="product in orderProducts"
 					:key="product.id"
 					v-bind="{ product }"
-					:defaultCheck="checkIncluded(product.id)"
-					:inCartPage="true"
+					:default-check="checkIncluded(product.id)"
+					:in-cart-page="true"
 					@delete-cart-item="onDeleteCartItem"
 					@select-cart-item="onSelectCartItem"
 				/>

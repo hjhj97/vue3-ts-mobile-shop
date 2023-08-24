@@ -14,10 +14,7 @@
 
 	export default defineComponent({
 		props: {
-			product: Object as PropType<Product>,
-		},
-		setup() {
-			return {};
+			product: { type: Object as PropType<Product>, required: true },
 		},
 	});
 </script>

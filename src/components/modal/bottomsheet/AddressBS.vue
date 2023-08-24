@@ -1,5 +1,5 @@
 <template>
-	<BaseBS height="80vh" :isFullWidth="true" @close-modal="$emit('close-modal')">
+	<BaseBS height="80vh" :is-full-width="true" @close-modal="$emit('close-modal')">
 		<template #content>
 			<div class="address-search-container">
 				<div id="address_container"></div>

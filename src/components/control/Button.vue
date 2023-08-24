@@ -11,9 +11,6 @@
 		props: {
 			theme: String,
 		},
-		setup() {
-			return {};
-		},
 	});
 </script>
 
