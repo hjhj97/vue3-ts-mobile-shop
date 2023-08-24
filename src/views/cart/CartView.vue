@@ -48,7 +48,6 @@
 	import { deleteCartItem, getCartList } from '@/api/cart';
 	// Type
 	import { OrderProduct } from '@/types/order';
-	import { requestOrder } from '@/api/order';
 
 	export default defineComponent({
 		components: { OrderProductComp, BottomFixed, Button },

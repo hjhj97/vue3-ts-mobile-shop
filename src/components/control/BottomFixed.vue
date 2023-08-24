@@ -6,8 +6,6 @@
 	</div>
 </template>
 
-<script></script>
-
 <style lang="scss" scoped>
 	.bottom-fixed {
 		position: fixed;

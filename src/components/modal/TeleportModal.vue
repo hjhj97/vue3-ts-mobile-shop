@@ -18,7 +18,6 @@
 				default: 'slide-up',
 			},
 		},
-		setup() {},
 	});
 </script>
 <style>
