@@ -1,4 +1,4 @@
-# 쇼핑몰 페이지
+# Vue 3(Composition API) + Typescript 를 활용한 쇼핑몰 사이트
 
 `vue3`, `pinia`, `typescript`를 사용하여 만드는 쇼핑몰 페이지입니다. 제 머릿속에 난잡하게 떠돌고 있는 개발 방법론을 직접 개발하면서 구체화시키기 위함이 주 목적입니다. 여유가 된다면 백엔드까지 작업할 예정입니다.
 
@@ -6,25 +6,23 @@
 
 ### Frontend
 
-- vue3 Composition API
-- vue-router
-- pinia (상태관리)
-- vee-validate (form 유효성 검증)
-- typescript
+- `node.js v18.17.0`
+- `vue3-composition-api`
+- `vue-router`
+- `pinia` (상태관리)
+- `vee-validate` (form 유효성 검증)
+- `typescript`
 
 ### Styling
 
-- sass
+- `sass`
+- `swiper`
 
 ### Etc.
 
-- eslint
-- prettier
-- msw
-
-### Backend (Not Yet)
-
-- Nest.js
+- `eslint`
+- `prettier`
+- `msw`
 
 ## 의존성 설치
 
